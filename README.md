@@ -99,16 +99,16 @@ All projects shown here are actively developed and intentionally presented as sn
 - Rivers. It would be nice to have mission objectives to seize, defend, or demolish bridges. 
 - More mission objectives, static or otherwise (Such as "Kill this Officer," "Destroy this Convoy," "Steal this," "Sabotage that," "Destroy these," "Liberate Those.")
 - More house models
+- Mission objective models
 - Dynamic cities?
 - *Somehow* figure out how to make dynamic roads/paths that connect random towns/houses.
 
 ### Known Bugs
-- Foliage penetrates through things like rocks, houses/floors, and characters. Tried to fix --> Did not fix --> Sadness
+- Foliage penetrates through things like rocks, houses/floors, and characters.
 
 ### Needs Updating
 - Towns and military bases spawn in perfect squares. Add irregularity.
 - Forests (around mission objectives) are perfect circles. Add irregularity.
-- 
 
 ---
   
