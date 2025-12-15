@@ -1,6 +1,6 @@
 # Alexander Forsell
 
-> Status: Living portfolio - Systems are *actively* under development and iteration.
+> Status: Living portfolio - Systems are *actively* under development.
 
 Unreal Engine 5 gameplay programmer focused on building core gameplay systems.
 
