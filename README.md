@@ -84,20 +84,31 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ### Done
 - (0) Sharing the world-seed with the client upon client-login
+  - (0.5) If not the host, wait to receive server-data. Do NOT start the spawners UNTIL all major BPs have been successfully received). Fixes replication bug where a tree (or something) might exist in one place for the host, but exist in another place for the client. 
 - (1) Mission-Objective Spawning. Place a random number of mission objectives in random locations. Store those locations.
 - (2) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
 - (3) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
 - (4) Seed-Based House Spawner. (Places a random number of houses in random locations). 
 - (5) Seed-Based Foliage Generator. (Places trees, bushes and rocks in random locations and in a random density).
+- Universal Landscape Material. Spawns grass and flower meshes atop itself, no need to manually paint. The steeper the slope, the yellower (dryer) the terrain.
+- Completed logic for a simple "Capture and Hold" objective.
+- Complex foliage materials. Using Runtime Virtual Textures, foliage like grass, bushes, and flowers inherit their colors from the landscape beneath it. Sloped, yellow hills will have yellow foliage.
 
 ### Planned
-- …
+- Dynamic landscape generator. Rather than importing different heightmap-scans of random fields in rural Canada, dynamically generate the landscape using the seed. Massive project, but it would make each level more dynamic.
+- Rivers. It would be nice to have mission objectives to seize, defend, or demolish bridges. 
+- More mission objectives, static or otherwise (Such as "Kill this Officer," "Destroy this Convoy," "Steal this," "Sabotage that," "Destroy these," "Liberate Those.")
+- More house models
+- Dynamic cities?
+- *Somehow* figure out how to make dynamic roads/paths that connect random towns/houses.
 
 ### Known Bugs
-- …
+- Foliage penetrates through things like rocks, houses/floors, and characters. Tried to fix --> Did not fix --> Sadness
 
 ### Needs Updating
-- …
+- Towns and military bases spawn in perfect squares. Add irregularity.
+- Forests (around mission objectives) are perfect circles. Add irregularity.
+- 
 
 ---
   
