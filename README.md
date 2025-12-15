@@ -10,6 +10,12 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ---
 
+## Design Constraints
+- Solo Development: All gameplay systems were designed and implemented independently, with external references used only for unfamiliar engine-specific concepts.
+- Art Scope Separation: The project prioritizes gameplay systems and logic over original asset creation. Most visual assets (e.g., foliage and rocks) were sourced externally and modified as needed.
+
+---
+
 ## Weapon System
 **Video Demo:** (unlisted YouTube link)
 
@@ -83,7 +89,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
-- Games with purpose-built levels *do* generally have better layouts, I agree. *However,* they also suffer because they can get old. Once you play the same level a few times over, it can get quite boring. And in competitive games, if nothing ever changes, there might be some unconsidered geometry that provides an exploitable location. For example, climbing on top of a building or a ledge that was never meant to be climbed. If everything is always dynamically generated, then there is always going to be something different to keep the game fresh and interesting. And unlike prebuilt levels, if I want more variety, I can always go back and expand an array of houses or tree types, and I can mess around with variables to get different results as needed. Dynamic worlds are always expandable with new content, such as new models, in a way that purpose-build levels are not. 
+- Games with purpose-built levels *do* generally have better layouts, I agree. *However,* they also suffer because they can get old. Once you play the same level a few times over, it can get quite boring. And in competitive games, if nothing ever changes, there might be some unconsidered geometry that provides an exploitable location. For example, climbing on top of a building or a ledge that was never meant to be climbed. If everything is always dynamically generated, then there is always going to be something different to keep the game fresh and interesting. And unlike prebuilt levels, if I want more variety, I can always go back and expand an array of houses or tree types, and I can mess around with variables to get different results as needed. Dynamic worlds are always expandable with new content, such as new models, in a way that purpose-built levels are not. 
 
 ### Done
 - (0) Sharing the world-seed with the client upon client-login
