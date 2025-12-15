@@ -17,15 +17,21 @@ All projects shown here are actively developed and intentionally presented as sn
 -
 
 ### Done
-- …
+- Parent weapon class (stores the main logic), child classes inherit the logic and use their own variables such as "damage," "magazineCapacity" and "RPS." Each weapon can behave differently just by changing variables.
+- Completed separate paths to handle different behavior between full-auto, semi-auto, and bolt-action weapons.
+- Spawning projectiles when the player *has* ammo
+- Projectiles travel where the player is looking (if we disregard bullet-drop), regardless of using first-person or third-person camera.
+- Replicated projectiles. (Fixed issue where client would watch the host fire two bullets in two different directions).
 
 ### Planned
-- …
+- Ammo drops/pickups
+- Bayonets/melee
+- More weapons and weapon models
 
 ### Known Bugs
-- …
+- Projectiles *have* collision and fully interact with characters and blueprints, but projectiles pass straight through HISMs (trees, rocks, etc) and the landscape.
 
-### Needs Updating / Refactor Targets
+### Needs Updating
 - …
   
 ---
@@ -44,7 +50,7 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Known Bugs
 - …
 
-### Needs Updating / Refactor Targets
+### Needs Updating
 - …
 
 ---
@@ -63,7 +69,7 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Known Bugs
 - …
 
-### Needs Updating / Refactor Targets
+### Needs Updating
 - …
 
 ---
