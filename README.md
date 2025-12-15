@@ -45,7 +45,7 @@ All projects shown here are actively developed and intentionally presented as sn
 - Projectiles *have* collision and fully interact with characters and blueprints, but projectiles pass straight through HISMs (trees, rocks, etc) and the landscape.
 
 ### Needs Updating
-- Animation Montage section. Uses a lot of branches, could be done WAY more efficiently.
+- Animation Montage section. Uses a lot of branches; could be done WAY more efficiently.
 - Extra comments and cleanup would not hurt.
   
 ---
@@ -54,22 +54,22 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
-- Maybe I do not have enough variety in my games, but I have never ecountered a game where the AI has some resemblance of self-preservation. I want my AI to have realistic behavior, which means that the AI should prioritize living, so that one day, if it is lucky, it can go back home to see its AI wife and AI children. If the AI wants to get a kill or put pressure on the player, its best chance at doing so would be to stay alive. So, rather than stand right in the open without a lick of cover, as I see in many AI, I want *my* AI to actively seek cover so it can avoid become what doctors would call a red paste. If the AI is threatened or actively being shot at, then the AI should seek cover and *maybe* fire their weapon from their safe(r) position. Otherwise, if the player is not facing the AI, that is an opportune moment to safely apply pressure by advancing and firing. 
+- Maybe I do not have enough variety in my games, but I have never encountered a game where the AI has some shred of self-preservation. I want my AI to have realistic behavior, which means that the AI should prioritize *living*, so that one day, if it is lucky, it can go back home to see its AI wife and AI children. If the AI wants to get a kill or put pressure on the player, its best chance at doing so would be to stay alive. So, rather than stand right in the open without a lick of cover, as I see in many AI, I want *my* AI to actively seek cover so it can avoid becoming what doctors would call a red paste. If the AI is threatened or actively being shot at, then the AI should seek cover and *maybe* fire their weapon from their safe(r) position. Otherwise, if the player is not facing the AI, that is an opportune moment to safely apply pressure by advancing and firing. 
 
 ### Done
 - Patrol Behavior:
   - To always be relevant, patrols are anchored around the *nearest* (anchors can change) player.
   - Go to a randomly selected point within the bounds of the area anchored to the nearest player. Repeat until entering combat.
 - Becoming Alert:
-  - Has different "alert" ranges depending on what the player in the vision-cone is doing (Struggles to find prone players, moderate at finding crouching players, easily sees standing or running players).
-  - Can become alert by detecing a bullet from the player. Player does not need to get a hit or a kill to alert the enemy. The mere presence of a bullet will put the AI into the combat branch.
+  - Has different "alert" ranges depending on what the player in the vision cone is doing (Struggles to find prone players, is moderate at finding crouching players, easily sees standing or running players).
+  - Can become alert by detecting a bullet from the player. The player does not need to get a hit or a kill to alert the enemy. The mere presence of a bullet will put the AI into the combat branch.
 - Combat Behavior:
   - ... 
 
 ### Planned
 - Self-preservation behavior. Actively seek cover when alert && the player is looking in their direction.
 - Offensive Behavior. When alert && the player is *not* looking in their direction, advance toward the player.
-- Squad Behavior. Officers are the brain of the squad and direct movement. Foot soldiers will be tied to a limited area surrounding their officer. When the officer dies, the movement restrictions are gone and the squad should *theoretically* dissolve without order.
+- Squad Behavior. Officers are the brain of the squad and direct movement. Foot soldiers will be tied to a limited area surrounding their officer. When the officer dies, the movement restrictions are gone, and the squad should *theoretically* dissolve without order.
 - Anti-crowding. When seeking cover, prevent AI from crowding into a single spot. If no nearby cover is available, crouch-in-place.
 - Morale. If the AI squad takes too many casualties too quickly or loses their officer, squads will either be fearful and rout (and later despawn), or be invigorated and bayonet-charge.
 - Behavioral differences based on enemy faction. One faction might have AI that is hyper-aggressive, whereas another faction might rely on stalking and ambushes.
@@ -92,14 +92,14 @@ All projects shown here are actively developed and intentionally presented as sn
 - Games with purpose-built levels *do* generally have better layouts, I agree. *However,* they also suffer because they can get old. Once you play the same level a few times over, it can get quite boring. And in competitive games, if nothing ever changes, there might be some unconsidered geometry that provides an exploitable location. For example, climbing on top of a building or a ledge that was never meant to be climbed. If everything is always dynamically generated, then there is always going to be something different to keep the game fresh and interesting. And unlike prebuilt levels, if I want more variety, I can always go back and expand an array of houses or tree types, and I can mess around with variables to get different results as needed. Dynamic worlds are always expandable with new content, such as new models, in a way that purpose-built levels are not. 
 
 ### Done
-- (0) Sharing the world-seed with the client upon client-login
-  - (0.5) If not the host, wait to receive server-data. Do NOT start the spawners UNTIL all major BPs have been successfully received). Fixes replication bug where a tree (or something) might exist in one place for the host, but exist in another place for the client. 
+- (0) Sharing the world-seed with the client upon client login
+  - (0.5) If not the host, wait to receive server-data. Do NOT start the spawners UNTIL all major BPs have been successfully received. Fixes replication bug where a tree (or something) might exist in one place for the host, but exist in another place for the client. 
 - (1) Mission-Objective Spawning. Place a random number of mission objectives in random locations. Store those locations.
 - (2) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
 - (3) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
 - (4) Seed-Based House Spawner. (Places a random number of houses in random locations). 
-- (5) Seed-Based Foliage Generator. (Places trees, bushes and rocks in random locations and in a random density).
-- Universal Landscape Material. Spawns grass and flower meshes atop itself, no need to manually paint. The steeper the slope, the yellower (dryer) the terrain.
+- (5) Seed-Based Foliage Generator. (Places trees, bushes, and rocks in random locations and in a random density).
+- Universal Landscape Material. Spawns grass and flower meshes atop itself, no need to manually paint. The steeper the slope, the yellower (drier) the terrain.
 - Completed logic for a simple "Capture and Hold" objective.
 - Complex foliage materials. Using Runtime Virtual Textures, foliage like grass, bushes, and flowers inherit their colors from the landscape beneath it. Sloped, yellow hills will have yellow foliage.
 
