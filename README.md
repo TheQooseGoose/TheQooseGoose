@@ -1,16 +1,26 @@
-## Hi there 👋 TEST
+# Alexander Forsell
 
-<!--
-**TheQooseGoose/TheQooseGoose** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Unreal Engine 5 gameplay programmer focused on building core gameplay systems.
 
-Here are some ideas to get you started:
+This repository serves as a living portfolio and development log, showcasing work-in-progress systems such as weapons, AI, and dynamic world generation. Each section documents what is implemented, what is planned, known issues, and areas marked for refactoring or improvement.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+All projects shown here are actively developed and intentionally presented as snapshots of the iteration process rather than finished products.
+
+
+## Weapon System
+**Video Demo:** (unlisted YouTube link)
+
+### Done
+- …
+
+### Planned
+- …
+
+### Known Bugs
+- …
+
+### Needs Updating / Refactor Targets
+- …
+
+Email: alexforsell354@gmail.com
+LinkedIn: https://www.linkedin.com/in/alex-forsell-a810ba364/
