@@ -14,7 +14,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
--
+- Different weapons will have different behaviors. A Semi-Auto rifle is quite simple because it is a simple matter of clicking the mouse and spawning a projectile while there is still ammo. A full-auto rifle is hold-and-release, but I also need different values for RPS (Rounds per Second) so that each full-auto weapon has different rates of fire. And a bolt-action rifle requires manual cycling, so, after a shot, if the weapon is not out of ammo, the 'r' key is used not to "reload" the weapon, but to cycle the next round into the chamber. 
 
 ### Done
 - Parent weapon class (stores the main logic), child classes inherit the logic and use their own variables such as "damage," "magazineCapacity" and "RPS." Each weapon can behave differently just by changing variables.
@@ -24,6 +24,7 @@ All projects shown here are actively developed and intentionally presented as sn
 - Replicated projectiles. (Fixed issue where client would watch the host fire two bullets in two different directions).
 - Animation montages (weapon recoil) when firing and not out of ammo. Different montage for different positions. Ex: Prone firing vs. Stand firing
 - AI dealt damage based on the struck bone in the skeletal mesh. Ex: A hit to a limb does half damage. A hit to the torso does normal damage. A hit to the head deals double damage.
+- Prevent player from discarding a full magazine. When discaring a non-empty magazine, the ammo is wasted.
 
 ### Planned
 - Ammo drops/pickups
@@ -47,6 +48,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
+- Maybe I do not have enough variety in my games, but I have never ecountered a game where the AI has some resemblance of self-preservation. I want my AI to have realistic behavior, which means that the AI should prioritize living, so that one day, if it is lucky, it can go back home to see its AI wife and AI children. If the AI wants to get a kill or put pressure on the player, its best chance at doing so would be to stay alive. So, rather than stand right in the open without a lick of cover, as I see in many AI, I want *my* AI to actively seek cover so it can avoid become what doctors would call a red paste. If the AI is threatened or actively being shot at, then the AI should seek cover and *maybe* fire their weapon from their safe(r) position. Otherwise, if the player is not facing the AI, that is an opportune moment to safely apply pressure by advancing and firing. 
 
 ### Done
 - Patrol Behavior:
@@ -81,6 +83,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
+- Games with purpose-built levels *do* generally have better layouts, I agree. *However,* they also suffer because they can get old. Once you play the same level a few times over, it can get quite boring. And in competitive games, if nothing ever changes, there might be some unconsidered geometry that provides an exploitable location. For example, climbing on top of a building or a ledge that was never meant to be climbed. If everything is always dynamically generated, then there is always going to be something different to keep the game fresh and interesting. And unlike prebuilt levels, if I want more variety, I can always go back and expand an array of houses or tree types, and I can mess around with variables to get different results as needed. Dynamic worlds are always expandable with new content, such as new models, in a way that purpose-build levels are not. 
 
 ### Done
 - (0) Sharing the world-seed with the client upon client-login
@@ -100,11 +103,11 @@ All projects shown here are actively developed and intentionally presented as sn
 - More mission objectives, static or otherwise (Such as "Kill this Officer," "Destroy this Convoy," "Steal this," "Sabotage that," "Destroy these," "Liberate Those.")
 - More house models
 - Mission objective models
-- Dynamic cities?
+- Dynamic "cities" (Larger towns with slightly larger building models)?
 - *Somehow* figure out how to make dynamic roads/paths that connect random towns/houses.
 
 ### Known Bugs
-- Foliage penetrates through things like rocks, houses/floors, and characters.
+- Foliage penetrates through things like rocks, houses/floors, and characters, despite my attempts to fix.
 
 ### Needs Updating
 - Towns and military bases spawn in perfect squares. Add irregularity.
