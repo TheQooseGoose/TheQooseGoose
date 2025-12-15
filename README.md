@@ -69,7 +69,7 @@ All projects shown here are actively developed and intentionally presented as sn
 - AI Spawner tied to the player. If there are 2 players, there are two spawners. Spawn AI ~1Km from the anchored player and do not spawn near a *different* player. 
 
 ### Known Bugs
-- …
+- 
 
 ### Needs Updating
 - Combat Behavior has no substance. Currently, it is just "Go to 0.00, 0.00, 0.00."
@@ -83,7 +83,12 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Design Rationale
 
 ### Done
-- …
+- (0) Sharing the world-seed with the client upon client-login
+- (1) Mission-Objective Spawning. Place a random number of mission objectives in random locations. Store those locations.
+- (2) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
+- (3) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
+- (4) Seed-Based House Spawner. (Places a random number of houses in random locations). 
+- (5) Seed-Based Foliage Generator. (Places trees, bushes and rocks in random locations and in a random density).
 
 ### Planned
 - …
