@@ -20,7 +20,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
-- Different weapons will have different behaviors. A Semi-Auto rifle is quite simple because it is a simple matter of clicking the mouse and spawning a projectile while there is still ammo. A full-auto rifle is hold-and-release, but I also need different values for RPS (Rounds per Second) so that each full-auto weapon has different rates of fire. And a bolt-action rifle requires manual cycling, so, after a shot, if the weapon is not out of ammo, the 'r' key is used not to "reload" the weapon, but to cycle the next round into the chamber. 
+- Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup therefore focuses on tuning variables such as "RPS" and "Damage" values, while preserving a single, shared execution path for weapon logic.
 
 ### Done
 - Parent weapon class (stores the main logic), child classes inherit the logic and use their own variables such as "damage," "magazineCapacity" and "RPS." Each weapon can behave differently just by changing variables.
@@ -54,7 +54,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
-- Maybe I do not have enough variety in my games, but I have never encountered a game where the AI has some shred of self-preservation. I want my AI to have realistic behavior, which means that the AI should prioritize *living*, so that one day, if it is lucky, it can go back home to see its AI wife and AI children. If the AI wants to get a kill or put pressure on the player, its best chance at doing so would be to stay alive. So, rather than stand right in the open without a lick of cover, as I see in many AI, I want *my* AI to actively seek cover so it can avoid becoming what doctors would call a red paste. If the AI is threatened or actively being shot at, then the AI should seek cover and *maybe* fire their weapon from their safe(r) position. Otherwise, if the player is not facing the AI, that is an opportune moment to safely apply pressure by advancing and firing. 
+- AI behavior prioritizes self-preservation as a core deicsion driver. Enemies continuously evaluate threat and postioning to decide when to seek cover, advance, or apply pressure, rather than remaining exposed until shot. Under active threat, the AI prioritizes defensive positioning to maintain survivability and, by extension, continued relevance in the encounter. When a player shifts their attention elsewhere, such as by responding to another oncoming threat, that window is treated as an opportunity to reposition, advance, and apply pressure safely. Thus, the AI avoids reckless, "stupid" aggression and instead favors behavior that mirrors believable combat decision-making, as opposed to static stand-and-shoot (without cover or concealment) exchanges.
 
 ### Done
 - Patrol Behavior:
@@ -89,7 +89,7 @@ All projects shown here are actively developed and intentionally presented as sn
 **Video Demo:** (unlisted YouTube link)
 
 ### Design Rationale
-- Games with purpose-built levels *do* generally have better layouts, I agree. *However,* they also suffer because they can get old. Once you play the same level a few times over, it can get quite boring. And in competitive games, if nothing ever changes, there might be some unconsidered geometry that provides an exploitable location. For example, climbing on top of a building or a ledge that was never meant to be climbed. If everything is always dynamically generated, then there is always going to be something different to keep the game fresh and interesting. And unlike prebuilt levels, if I want more variety, I can always go back and expand an array of houses or tree types, and I can mess around with variables to get different results as needed. Dynamic worlds are always expandable with new content, such as new models, in a way that purpose-built levels are not. 
+- World layout is driven by dynamic generation to prioritize replayability and prevent encounters from becoming predictable or mundane over time. Unlike static, purpose-built levels, dynamically generated environments vary terrain, structures, and sightlines between sessions, keeping posiioning and threat assessment contextual rather than memorized. By keeping level generation dynamic, there is also long-term scalability, allowing new variety to be introduced through additional assets or the adjustment of parameters, as opposed to full level redesigns. 
 
 ### Done
 - (0) Sharing the world-seed with the client upon client login
