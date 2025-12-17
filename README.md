@@ -17,7 +17,7 @@ All projects shown here are actively developed and intentionally presented as sn
 ---
 
 ## Weapon System
-**Video Demo:** (unlisted YouTube link)
+**Video Demo:** (Needs video)
 
 ### Design Rationale
 - Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup therefore focuses on tuning variables such as "RPS" and "Damage" values, while preserving a single, shared execution path for weapon logic.
@@ -31,6 +31,7 @@ All projects shown here are actively developed and intentionally presented as sn
 - Animation montages (weapon recoil) when firing and not out of ammo. Different montage for different positions. Ex: Prone firing vs. Stand firing
 - AI dealt damage based on the struck bone in the skeletal mesh. Ex: A hit to a limb does half damage. A hit to the torso does normal damage. A hit to the head deals double damage.
 - Prevent player from discarding a full magazine. When discaring a non-empty magazine, the ammo is wasted.
+- Updated animation montage section (weapon recoil animations): Uses fewer branches, less clunky and less complex. 
 
 ### Planned
 - Ammo drops/pickups
@@ -43,15 +44,15 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ### Known Bugs
 - Projectiles *have* collision and fully interact with characters and blueprints, but projectiles pass straight through HISMs (trees, rocks, etc) and the landscape.
+- Imperfect animation montage replication for clients. 
 
 ### Needs Updating
-- Animation Montage section. Uses a lot of branches; could be done WAY more efficiently.
 - Extra comments and cleanup would not hurt.
   
 ---
 
 - ## Basic AI
-**Video Demo:** (unlisted YouTube link)
+**Video Demo:** (Needs video)
 
 ### Design Rationale
 - AI behavior prioritizes self-preservation as a core deicsion driver. Enemies continuously evaluate threat and postioning to decide when to seek cover, advance, or apply pressure, rather than remaining exposed until shot. Under active threat, the AI prioritizes defensive positioning to maintain survivability and, by extension, continued relevance in the encounter. When a player shifts their attention elsewhere, such as by responding to another oncoming threat, that window is treated as an opportunity to reposition, advance, and apply pressure safely. Thus, the AI avoids reckless, "stupid" aggression and instead favors behavior that mirrors believable combat decision-making, as opposed to static stand-and-shoot (without cover or concealment) exchanges.
@@ -86,7 +87,7 @@ All projects shown here are actively developed and intentionally presented as sn
 ---
 
 ## World Generation
-**Video Demo:** (unlisted YouTube link)
+**Video Demo:** (Needs video)
 
 ### Design Rationale
 - World layout is driven by dynamic generation to prioritize replayability and prevent encounters from becoming predictable or mundane over time. Unlike static, purpose-built levels, dynamically generated environments vary terrain, structures, and sightlines between sessions, keeping posiioning and threat assessment contextual rather than memorized. By keeping level generation dynamic, there is also long-term scalability, allowing new variety to be introduced through additional assets or the adjustment of parameters, as opposed to full level redesigns. 
@@ -113,11 +114,11 @@ All projects shown here are actively developed and intentionally presented as sn
 - *Somehow* figure out how to make dynamic roads/paths that connect random towns/houses.
 
 ### Known Bugs
-- Foliage penetrates through things like rocks, houses/floors, and characters, despite my attempts to fix.
+- Foliage penetrates through everything on top of itself. Ex: Blades of grass penetrating floors or rocks.
 
 ### Needs Updating
 - Towns and military bases spawn in perfect squares. Add irregularity.
-- Forests (around mission objectives) are perfect circles. Add irregularity.
+- Forests (specifically around mission objectives) are perfect circles. Add irregularity.
 
 ---
   
