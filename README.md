@@ -145,7 +145,7 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - Forests (specifically around mission objectives) are perfect circles. Add irregularity.
 
 ### Tradeoffs & Alternatives
-- 
+- Alternatively, I could have purpose-built levels, which *are* generally better built and more artistic than random generation. But that also means that, after enough playthroughs, the content gets old very fast, because nothing new ever happens, and gameplay stops feeling refreshing, and there will not be any new surprises.
 
 ### Player Impact
 - 
