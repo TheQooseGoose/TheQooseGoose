@@ -12,6 +12,9 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ### Project Context
 
+This project serves as a systems-focused demonstration of my ability to design and implement gameplay mechanics within a game engine. It exists to support and validate my independent study by providing concrete evidence of hands-on game development experience through working systems, documented design decisions, and problem-solving.
+The primary focus is on gameplay logic and system architecture, including weapons, AI behavior and spawning, and dynamic world generation. Unreal Engine 5 is used as the chosen implementation environment, but the emphasis is placed on transferable design principles, such as state-driven logic or system extensibility, rather than engine-specific features. Visuals are intentionally deprioritized in favor of functionality. 
+
 ---
 
 ## Design Constraints
@@ -54,7 +57,10 @@ All projects shown here are actively developed and intentionally presented as sn
 - Review server/client authority. Client should not have authority. Most things should be fine, but something might have slipped through the cracks.
 
 ### Tradeoffs & Alternatives
-- 
+-
+
+### Player Impact
+-
   
 ---
 
@@ -91,7 +97,10 @@ All projects shown here are actively developed and intentionally presented as sn
 - Experiment with different patrol ranges. Larger area = less-likely to encounter player.
 
 ### Tradeoffs & Alternatives
-- 
+-
+
+### Player Impact
+-
 
 ---
 
@@ -132,6 +141,9 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Tradeoffs & Alternatives
 - 
 
+### Player Impact
+- 
+
 ---
 
 ## AI Spawner
@@ -159,6 +171,9 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ### Tradeoffs & Alternatives
 - 
+
+### Player Impact
+-
 
 ---
   
