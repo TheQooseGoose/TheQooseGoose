@@ -75,7 +75,6 @@ All projects shown here are actively developed and intentionally presented as sn
 - Morale. If the AI squad takes too many casualties too quickly or loses their officer, squads will either be fearful and rout (and later despawn), or be invigorated and bayonet-charge.
 - Behavioral differences based on enemy faction. One faction might have AI that is hyper-aggressive, whereas another faction might rely on stalking and ambushes.
 - LOTS of VA. Keep the AI shouting.
-- AI Spawner tied to the player. If there are 2 players, there are two spawners. Spawn AI ~1Km from the anchored player and do not spawn near a *different* player. 
 
 ### Known Bugs
 - 
@@ -121,6 +120,29 @@ All projects shown here are actively developed and intentionally presented as sn
 - Forests (specifically around mission objectives) are perfect circles. Add irregularity.
 
 ---
+
+## AI Spawner
+**Video Demo:** (Too early in development for a video)
+
+###Design Rationale
+- 
+
+### Done
+- Spawned by server on game start.
+- Knows the number of connected players.
+- Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
+
+### Planned
+- Flexibility? AI are meant to operate and spawn in squads of 10. 1 officer and 9 "grunts." The current setup will spawn *individual* AI once the current AI-count is beneath the cap, not a full squad. Perhaps make the cap flexible so that, if the squad cap is reached, but some squads are seriously understrength, spawn another squad anyway.
+- Isolation punishment. If there is more than 1 player in the level, find all instances of players in which the nearest player to them is further than 1Km. Spawn AI squads at three points around that isolated player and converge on their last known location. Make sure this does not happen every tick!!!
+- Prevent spawning <1Km to nearest player, prevent spawning >1.5Km to nearest player. (Players should never witness AI spawning. AI should not need to travel a gargantuan distance just to get within range of the nearest player).
+- The more mission-objectives completed, the greater the squad spawn-cap? Naturally increase the spawn-cap with time?
+
+### Known Bugs
+-
+
+### Needs Updating
+-
   
 Email: alexforsell354@gmail.com
 LinkedIn: https://www.linkedin.com/in/alex-forsell-a810ba364/
