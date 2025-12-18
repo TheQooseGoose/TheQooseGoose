@@ -149,7 +149,7 @@ The primary focus is on gameplay logic and system architecture, including weapon
 ## AI Spawner
 **Video Demo:** (Too early in development for a video)
 
-###Design Rationale
+### Design Rationale
 - 
 
 ### Done
