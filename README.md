@@ -72,8 +72,9 @@ The primary focus is on gameplay logic and system architecture, including weapon
 
 ### Done
 - Patrol Behavior:
-  - To always be relevant, patrols are anchored around the *nearest* (anchors can change) player.
+  - To always be relevant, patrols are anchored around the *nearest* player (Anchors can change).
   - Go to a randomly selected point within the bounds of the area anchored to the nearest player. Repeat until entering combat.
+  - Projectile strikes to the limbs deal half damage. Projectile strikes to the torso deal normal damage. Projectile strikes to the head deal double damage.
 - Becoming Alert:
   - Has different "alert" ranges depending on what the player in the vision cone is doing (Struggles to find prone players, is moderate at finding crouching players, easily sees standing or running players).
   - Can become alert by detecting a bullet from the player. The player does not need to get a hit or a kill to alert the enemy. The mere presence of a bullet will put the AI into the combat branch.
@@ -87,7 +88,9 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - Anti-crowding. When seeking cover, prevent AI from crowding into a single spot. If no nearby cover is available, crouch in place.
 - Morale. If the AI squad takes too many casualties too quickly or loses their officer, squads will either be fearful and rout (and later despawn), or be invigorated and bayonet-charge.
 - Behavioral differences based on enemy faction. One faction might have AI that is hyper-aggressive, whereas another faction might rely on stalking and ambushes.
-- LOTS of VA. Keep the AI shouting.
+- LOTS of VA. Keep the AI shouting orders.
+- Formations??? Ex: March in column (Patrol), 'L' formation (combat)
+- Out of ammo? Seek cover! -> Reload -> Continue (AI will not stand out in the open while it does not have ammunition with which to defend itself). 
 
 ### Known Bugs
 - 
@@ -97,10 +100,13 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - Experiment with different patrol ranges. Larger area = less-likely to encounter player.
 
 ### Tradeoffs & Alternatives
--
+- If all the AI is actively seeking cover and running a lot of checks, the AI might be more expensive to run in bulk. In exchange for less "dumb" AI, there will *probably* have to be less AI for the sake of performance.
+- Alternatively, the AI could be "dumber" and *not* seek cover or otherwise behave more recklessly, but that runs the risk of creating "another generic AI" that simply runs around and shoots without considering its own safety. If the AI does not try to preserve its own life, it feels less "real." 
 
 ### Player Impact
--
+- Due to anchored patrol behavior, the AI always "knows" the location of the players and will patrol in that area. As such, there should never be a squad of AI patrolling several kilometers away from the nearest player. So, AI squads should always be relevant due to their proximity, and are more likely to encounter players during their patrols.
+- AI that actively tries to keep itself alive, such as by using cover, as opposed to standing out in the open, is harder to perceive as being "dumb." Killing a self-preserving AI should feel like a satisfying minor-accomplishment for the player since the AI, despite having low-health (one or two shots to kill), is more challenging to hit while it is concealed behind cover.
+- The AI knows that it has a ranged projectile weapon. To keep pressure, the AI will still advance on the players, but they will not be afraid to use their rifles, as opposed to charging from tens of meters away with their bayonets. 
 
 ---
 
