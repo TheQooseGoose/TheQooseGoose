@@ -10,6 +10,10 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ---
 
+### Project Context
+
+---
+
 ## Design Constraints
 - Solo Development: All gameplay systems were designed and implemented independently, with external references used only for unfamiliar engine-specific concepts.
 - Art Scope Separation: The project prioritizes gameplay systems and logic over original asset creation. Most visual assets (e.g., foliage and rocks) were sourced externally and modified as needed.
@@ -44,10 +48,13 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ### Known Bugs
 - Projectiles *have* collision and fully interact with characters and blueprints, but projectiles pass straight through HISMs (trees, rocks, etc) and the landscape.
-- Imperfect animation montage replication for clients. 
 
 ### Needs Updating
 - Extra comments and cleanup would not hurt.
+- Review server/client authority. Client should not have authority. Most things should be fine, but something might have slipped through the cracks.
+
+### Tradeoffs & Alternatives
+- 
   
 ---
 
@@ -82,6 +89,9 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Needs Updating
 - Combat Behavior has no substance. Currently, it is "Go to 0.00, 0.00, 0.00."
 - Experiment with different patrol ranges. Larger area = less-likely to encounter player.
+
+### Tradeoffs & Alternatives
+- 
 
 ---
 
@@ -119,6 +129,9 @@ All projects shown here are actively developed and intentionally presented as sn
 - Towns and military bases spawn in perfect squares. Add irregularity.
 - Forests (specifically around mission objectives) are perfect circles. Add irregularity.
 
+### Tradeoffs & Alternatives
+- 
+
 ---
 
 ## AI Spawner
@@ -143,6 +156,11 @@ All projects shown here are actively developed and intentionally presented as sn
 
 ### Needs Updating
 -
+
+### Tradeoffs & Alternatives
+- 
+
+---
   
 Email: alexforsell354@gmail.com
 LinkedIn: https://www.linkedin.com/in/alex-forsell-a810ba364/
