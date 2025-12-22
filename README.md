@@ -156,7 +156,7 @@ The primary focus is on gameplay logic and system architecture, including weapon
 **Video Demo:** (Too early in development for a video)
 
 ### Design Rationale
-- 
+- In a multiplayer environment, players frequenrly diverage in spacing an intent. Some players cluster into a primary engagement zone, while others operate more independently as "lone wolves." A naive spawner that targets only the largest cluster of players risks leaving isolated players unchallenged, enabling objective completion with minimal resistance. To counter, the spawner will collect the current information of all AI squad officers and all players. Using the collected data, the spawner can determine which player is the *most* isolated from enemy AI and will use that player as the spawn-anchor. The next batch of AI will spawn (while abiding to the spawn rules) near to that isolated player.
 
 ### Done
 - Spawned by server on game start.
@@ -164,13 +164,12 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
 
 ### Planned
-- Flexibility? AI are meant to operate and spawn in squads of 10. 1 officer and 9 "grunts." The current setup will spawn *individual* AI once the current AI-count is beneath the cap, not a full squad. Perhaps make the cap flexible so that, if the squad cap is reached, but some squads are seriously understrength, spawn another squad anyway.
-- Isolation punishment. If there is more than 1 player in the level, find all instances of players in which the nearest player to them is further than 1Km. Spawn AI squads at three points around that isolated player and converge on their last known location. Make sure this does not happen every tick!!!
+- Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated. (Get the current locations of all the (alive) squad officers and all the locations of the players, and use that data to figure out which player has the least AI near them. Use THAT player as the target anchor, and spawn the next batch of AI in relative proximity. 
 - Prevent spawning <1Km to nearest player, prevent spawning >1.5Km to nearest player. (Players should never witness AI spawning. AI should not need to travel a gargantuan distance just to get within range of the nearest player).
 - The more mission-objectives completed, the greater the squad spawn-cap? Naturally increase the spawn-cap with time?
 
 ### Known Bugs
--
+- Trying to design an inexpensive system to collect the locations of all AI officers at the time of the tick. Store collected data in the Game State, let the AI Spawner blueprint access that data. I've clearly done something wrong since I crashed Unreal Engine in one of my tests. I think I know why, but I still need to diagnose for certain.
 
 ### Needs Updating
 -
@@ -179,7 +178,7 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - 
 
 ### Player Impact
--
+- 
 
 ---
   
