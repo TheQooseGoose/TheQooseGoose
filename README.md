@@ -54,13 +54,13 @@ The primary focus is on gameplay logic and system architecture, including weapon
 
 ### Needs Updating
 - Extra comments and cleanup would not hurt.
-- Review server/client authority. Client should not have authority. Most things should be fine, but something might have slipped through the cracks.
+- Review server/client authority. The client should not have authority. Most things should be fine, but something might have slipped through the cracks.
 
 ### Tradeoffs & Alternatives
--
+- A weapon that behaves differently from the expected bolt-action/semi/full enumerators would need its own logic path added, such as burst-fire weapons. In exchange, however, weapons are incredibly easy to design, since a child of the base class just needs a few parameters to be modified, such as the rate of fire or magazine capacity.
 
 ### Player Impact
--
+- 
 
 ### Screenshots
 <details>
@@ -68,8 +68,9 @@ The primary focus is on gameplay logic and system architecture, including weapon
 
 <br>
 
-**Fire Mode Routing**
-- Player input is validated locally and forwarded to authoritative server events, with transition-state checks preventing invalid fire requests. (Ex: Prevent player from firing while moving TO prone and weapon is down).
+- This collection of screenshots does not include related logic for aiming/camera-zoom, the animation graph, or where player booleans that prevent weapon firing, such as "isInTransition?", are defined. 
+
+- Player input is validated locally and forwarded to authoritative server events, with transition-state checks preventing invalid fire requests. (Ex: Prevent player from firing while moving TO or FROM prone).
 - <img width="602" height="332" alt="IA_Shoot" src="https://github.com/user-attachments/assets/fa487fb9-36de-4562-a2e2-a5d687672e2e" />
 - Weapon firing behavior is resolved server-side using a unified execution path, with fore mode determining whether shots are timer-driven (full auto) or single-execution (semi-auto/bolt-action).
 - <img width="2048" height="623" alt="16c3d95d-c5c5-4c01-856b-fe5564e891cf" src="https://github.com/user-attachments/assets/9493722d-c783-4c32-89cb-426d3fed1f55" />
