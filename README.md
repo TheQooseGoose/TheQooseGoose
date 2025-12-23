@@ -13,7 +13,7 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Project Context
 
 This project serves as a systems-focused demonstration of my ability to design and implement gameplay mechanics within a game engine. It exists to support and validate my independent study by providing concrete evidence of hands-on game development experience through working systems, documented design decisions, and problem-solving.
-The primary focus is on gameplay logic and system architecture, including weapons, AI behavior and spawning, and dynamic world generation. Unreal Engine 5 is used as the chosen implementation environment, but the emphasis is placed on transferable design principles, such as state-driven logic or system extensibility, rather than engine-specific features. Visuals are intentionally deprioritized in favor of functionality. 
+The primary focus is on gameplay logic and system architecture, including weapons, AI behavior, and spawning, and dynamic world generation. Unreal Engine 5 is used as the chosen implementation environment, but the emphasis is placed on transferable design principles, such as state-driven logic or system extensibility, rather than engine-specific features. Visuals are intentionally deprioritized in favor of functionality. 
 
 ---
 
@@ -27,10 +27,10 @@ The primary focus is on gameplay logic and system architecture, including weapon
 **Video Demo:** https://youtu.be/E1dLsZp6jjw
 
 ### Design Rationale
-- Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup therefore focuses on tuning variables such as "RPS" and "Damage" values while preserving a single, shared execution path for weapon logic.
+- Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup therefore, focuses on tuning variables such as "RPS" and "Damage" values while preserving a single, shared execution path for weapon logic.
 
 ### Done
-- Parent weapon class (stores the main logic), child classes inherit the logic and use their own variables such as "damage," "magazineCapacity" and "RPS." Each weapon can behave differently just by changing variables.
+- Parent weapon class (stores the main logic), child classes inherit the logic and use their own variables such as "damage," "magazineCapacity," and "RPS." Each weapon can behave differently just by changing variables.
 - Completed separate paths to handle different behavior between full-auto, semi-auto, and bolt-action weapons.
 - Spawning projectiles when the player *has* ammo
 - Projectiles travel where the player is looking (if we disregard bullet-drop), regardless of using first-person or third-person camera.
@@ -61,6 +61,40 @@ The primary focus is on gameplay logic and system architecture, including weapon
 
 ### Player Impact
 -
+
+### Screenshots
+<details>
+<summary><strong>Logic Reference (Blueprint)</strong></summary>
+
+<br>
+
+**Fire Mode Routing**
+- Player input is validated locally and forwarded to authoritative server events, with transition-state checks preventing invalid fire requests. (Ex: Prevent player from firing while moving TO prone and weapon is down).
+- <img width="602" height="332" alt="IA_Shoot" src="https://github.com/user-attachments/assets/fa487fb9-36de-4562-a2e2-a5d687672e2e" />
+- Weapon firing behavior is resolved server-side using a unified execution path, with fore mode determining whether shots are timer-driven (full auto) or single-execution (semi-auto/bolt-action).
+- <img width="2048" height="623" alt="16c3d95d-c5c5-4c01-856b-fe5564e891cf" src="https://github.com/user-attachments/assets/9493722d-c783-4c32-89cb-426d3fed1f55" />
+- Weapon firing is gated by server authority, validated ownership, and weapon state before any behavior-specific logic is executed. A centralized validation gate prevents invalid firing, after which, weapon behavior branches cleanly the enumerated fire mode.
+- <img width="2048" height="617" alt="b4cb53bd-f323-45ff-baa2-9a91bbd75cfc" src="https://github.com/user-attachments/assets/e3bcc387-f459-42a3-bc0c-6641ecba7455" />
+- <img width="898" height="361" alt="b28746b6-98b0-4672-baff-144acf930cf6" src="https://github.com/user-attachments/assets/35fbe74f-3aa6-4996-8402-65db975f0e5c" />
+- Semi-automatic fire executes a single validated shot by decrementing ammunition and spawning a projectile through the shared pipeline.
+  - Note: Semi-auto and full-auto share the same core shot execution logic. I have not yet unified the two.
+- <img width="764" height="190" alt="fe5926c7-fb80-4125-ba94-fcea60c0fd47" src="https://github.com/user-attachments/assets/779196ff-d9aa-4937-b2b3-0f1c43578abe" />
+- Bolt-action fire enforces a manual cycling state, preventing additional shots until the weapon has been explicitly cycled.
+- <img width="763" height="307" alt="be99a75e-8021-44b1-b5b2-38c4d587363e" src="https://github.com/user-attachments/assets/0596748d-0977-4335-8bc1-d3bc697178f5" />
+- Projectile spawning logic determines the active camera context to ensure aim calculations reflect the player's actual viewpoint.
+- <img width="1839" height="511" alt="image" src="https://github.com/user-attachments/assets/4cba70e0-1592-47b4-b483-f67064afdb64" />
+- Third-person aiming uses a camera-based line trace to determine the intended target, ensuring projectiles align with the player's crosshair rather than weapon orientation.
+  - Note: This logic is old and messy. Could use some cleanup.
+  - If the line trace has no blocking hit, the "False" part of the branch has the projectile move toward the end of the line trace. This prevents a bug where, when the player fires into the air, the projectile travels in the wrong direction.
+- <img width="2048" height="568" alt="image" src="https://github.com/user-attachments/assets/7fcce5f1-deb2-4635-96fa-45e0b96d663f" />
+- Projectile lifetime is explicitly bounded to prevent lingering actors and unnecessary world clutter.
+- <img width="601" height="305" alt="6947da1a-2228-4b74-ad99-95743cf42f26" src="https://github.com/user-attachments/assets/8c890749-5ec7-4c00-b323-3198d8540ad9" />
+- Recoil animations are selected dynamically based on player posture and aiming state, ensuring correct visual feedback across movement states. 
+- <img width="998" height="373" alt="d718643f-12af-499c-a3c0-ccee15ece332" src="https://github.com/user-attachments/assets/b856d37e-fc04-4017-a52b-0666af767d1f" />
+
+
+</details>
+
   
 ---
 
