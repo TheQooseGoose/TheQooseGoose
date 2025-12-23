@@ -24,7 +24,7 @@ The primary focus is on gameplay logic and system architecture, including weapon
 ---
 
 ## Weapon System
-**Video Demo:** (Needs video)
+**Video Demo:** https://youtu.be/E1dLsZp6jjw
 
 ### Design Rationale
 - Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup therefore focuses on tuning variables such as "RPS" and "Damage" values while preserving a single, shared execution path for weapon logic.
