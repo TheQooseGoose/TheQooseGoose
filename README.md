@@ -220,11 +220,23 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Now the level has between four and eight mission objectives for the players to complete. But, because the level is currently a barren landscape, we want to make the surroundings a little more interesting. So, using a "Switch on Int" and a random number, each objective has a chance to spawn one of three things around itself: If 0, a Town. If 1, a forest. If 2, a military base.
   - Note: The houses are all blueprints because they are planned to have features like "Health" so that they can collapse after taking too much damage. Since blueprints can be easily replicated, the houses can be spawned here, whereas the HISMs, as used by the forests and military base props (such as sandbags or pillboxes) cannot, and have their own blueprint for spawning. So, instead, the location of the mission objective is stored as a "Forest Objective Location" or a "Base Objective Location" to be used later. 
 - <img width="908" height="407" alt="image" src="https://github.com/user-attachments/assets/4c2eb653-0edb-4b10-9028-bfaebee3db55" />
+- If a town is to be generated around an objective, the first thing to do is define how big that town is going to be. Then, with a rough estimate of the area around a house (+added room for spacing), we can figure out roughly how many houses can be supported in that town. 
+- <img width="911" height="304" alt="image" src="https://github.com/user-attachments/assets/3fafc48b-3625-4518-b3fc-ee09de2f46c4" />
+- Now that we know how many houses the town can support, we need to use the selected area and figure out the boundaries of the town, based on the town center (the spawned mission objective). 
+- <img width="659" height="284" alt="image" src="https://github.com/user-attachments/assets/d95a581d-91b1-4de2-ad62-0e38c0afe8a0" />
+- Now we can start spawning houses. So, using the defined boundaries of the town, select a random location, and repeat for however many houses *can* (not necessarily "will") be supported in that area. 
+- <img width="541" height="306" alt="image" src="https://github.com/user-attachments/assets/d6aee907-ea31-4275-8fa3-3f14b5ab0969" />
+- Conduct a line trace to determine the elevation, and subtract 125.0 units from that point to settle the mesh into the ground a little. If the line trace does NOT hit the Landscape, then do NOT spawn the house. Houses should not spawn atop other houses or foliage. 
+- <img width="774" height="397" alt="image" src="https://github.com/user-attachments/assets/cec1c344-eff0-4617-82c4-359eb9bfc7aa" />
+- Once a house is successfully spawned, the location is stored in an array. This loop iterates through those locations and determines if the new coordinate to test is too close to a house that was just spawned. (Prevent houses from spawning too closely). 
+- <img width="1001" height="232" alt="image" src="https://github.com/user-attachments/assets/8ae1ce57-3c0a-4689-94bd-eb9fb22a2c92" />
+- Choose a random type of house, give it a random rotation, and spawn it in the selected and approved location.
+- <img width="818" height="344" alt="image" src="https://github.com/user-attachments/assets/e43075b7-a919-460d-8f09-2f996b69e8a8" />
+- Now that the house has been successfully spawned, we need to store its location in the array so that its location can be tested later as new houses spawn.
+- <img width="293" height="227" alt="image" src="https://github.com/user-attachments/assets/60fe8e42-3c88-4bfb-a60b-2f40a6fd8370" />
 
 
 
-
- 
 
 
 </details>
