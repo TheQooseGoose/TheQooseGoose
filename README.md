@@ -57,7 +57,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Review server/client authority. The client should not have authority. Most things should be fine, but something might have slipped through the cracks.
 
 ### Tradeoffs & Alternatives
-- A weapon that behaves differently from the expected bolt-action/semi/full enumerators would need its own logic path added, such as burst-fire weapons. In exchange, however, weapons are incredibly easy to design, since a child of the base class just needs a few parameters to be modified, such as the rate of fire or magazine capacity.
+- A weapon that behaves differently from the expected bolt-action/semi/full enumerators would need its own logic path added, such as burst-fire weapons. In exchange, however, weapons are straightforward to design, since a child of the base class just needs a few parameters to be modified, such as the rate of fire or magazine capacity.
 
 ### Player Impact
 - 
@@ -171,12 +171,12 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - (3) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
 - (4) Seed-Based House Spawner. (Places a random number of houses in random locations). 
 - (5) Seed-Based Foliage Generator. (Places trees, bushes, and rocks in random locations and in a random density).
-- Universal Landscape Material. Spawns grass and flower meshes atop itself, no need to manually paint. The steeper the slope, the yellower (drier) the terrain.
+- Universal Landscape Material. Spawns grass and flower meshes atop itself; no need to manually paint. The steeper the slope, the yellower (drier) the terrain.
 - Completed logic for a simple "Capture and Hold" objective.
 - Complex foliage materials. Using Runtime Virtual Textures, foliage like grass, bushes, and flowers inherit their colors from the landscape beneath it. Sloped, yellow hills will have yellow foliage.
 
 ### Planned
-- Dynamic landscape generator. Rather than importing different heightmap-scans of random fields in rural Canada, dynamically generate the landscape using the seed. Massive project, but it would make each level more dynamic.
+- Dynamic landscape generator. Rather than importing different heightmap scans of random fields in rural Canada, dynamically generate the landscape using the seed. Massive project, but it would make each level more dynamic.
 - Rivers. It would be nice to have mission objectives to seize, defend, or demolish bridges. 
 - More mission objectives, static or otherwise (Such as "Kill this Officer," "Destroy this Convoy," "Steal this," "Sabotage that," "Destroy these," "Liberate Those.")
 - More house models
@@ -203,8 +203,29 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 
 <br>
 
-- This collection of screenshots does not include related logic for...
-- Note: 
+- This collection of screenshots does not include related logic for defining the number of connected players and their respective controllers. Nor does it cover how the host and client handle world generation differently. Only the independent generators are shown.  
+
+- The host joins the game first and initiates world generation. The first step, while the level is devoid of obstacles, is to spawn the key gameplay features, the mission objectives.
+- <img width="454" height="368" alt="image" src="https://github.com/user-attachments/assets/d7fde572-d245-4f48-922b-1e2795571d0c" />
+- The randomly generated seed is used to create an "RNGMaster," which is used to replicate the results of a "Random" node, since, when run independently on a device, a host, and a client will get different results. That number is then used to determine the random number (between 4 and 8) of objectives that will spawn in the level. Then, a loop will run for that 'random number' amount of times until all objectives have spawned in the level.
+- <img width="947" height="407" alt="image" src="https://github.com/user-attachments/assets/375d2c47-9d8f-4810-83f1-71e90909431f" />
+- Using the coordinates of two opposite corners of the level boundaries, using two "Random" nodes, generate a random coordinate.
+  - Note: The coordinates are currently hard-defined since I only have one level. If I ever get more levels or new boundaries to experiment with, I am aware that I will need to be more creative.
+- <img width="716" height="303" alt="image" src="https://github.com/user-attachments/assets/45a39f55-b9a1-48c9-8ef3-76f5c64cadcc" />
+- Using the random coordinate, a line trace is conducted to determine the elevation of the terrain. This way, a mission objective is spawned ON the landscape, and not floating in the air, or worse yet, totally inaccessible underground. To settle the spawned mesh into the terrain a little, it is moved down by 15.0cm. 
+- <img width="749" height="335" alt="image" src="https://github.com/user-attachments/assets/38db7ebc-4c1b-4891-9b46-c298504e2fdc" />
+- Before the "SpawnActor" node is executed, a random objective is chosen from an array.
+  - Note: At the time of writing, I only have a simple but functional "Capture and Hold" objective in the array, since it is the only semi-completed mission objective blueprint that I have.
+- <img width="671" height="175" alt="image" src="https://github.com/user-attachments/assets/0a195c27-80b1-4b25-a2a2-979cec7f514d" />
+- Now the level has between four and eight mission objectives for the players to complete. But, because the level is currently a barren landscape, we want to make the surroundings a little more interesting. So, using a "Switch on Int" and a random number, each objective has a chance to spawn one of three things around itself: If 0, a Town. If 1, a forest. If 2, a military base.
+  - Note: The houses are all blueprints because they are planned to have features like "Health" so that they can collapse after taking too much damage. Since blueprints can be easily replicated, the houses can be spawned here, whereas the HISMs, as used by the forests and military base props (such as sandbags or pillboxes) cannot, and have their own blueprint for spawning. So, instead, the location of the mission objective is stored as a "Forest Objective Location" or a "Base Objective Location" to be used later. 
+- <img width="908" height="407" alt="image" src="https://github.com/user-attachments/assets/4c2eb653-0edb-4b10-9028-bfaebee3db55" />
+
+
+
+
+ 
+
 
 </details>
 
