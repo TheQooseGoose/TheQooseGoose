@@ -75,7 +75,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="602" height="332" alt="IA_Shoot" src="https://github.com/user-attachments/assets/fa487fb9-36de-4562-a2e2-a5d687672e2e" />
 - Weapon firing behavior is resolved server-side using a unified execution path, with fore mode determining whether shots are timer-driven (full auto) or single-execution (semi-auto/bolt-action).
 - <img width="2048" height="623" alt="16c3d95d-c5c5-4c01-856b-fe5564e891cf" src="https://github.com/user-attachments/assets/9493722d-c783-4c32-89cb-426d3fed1f55" />
-- Weapon firing is gated by server authority, validated ownership, and weapon state before any behavior-specific logic is executed. A centralized validation gate prevents invalid firing, after which, weapon behavior branches cleanly the enumerated fire mode.
+- Weapon firing is gated by server authority, validated ownership, and weapon state before any behavior-specific logic is executed. A centralized validation gate prevents invalid firing, after which, weapon behavior branches cleanly to the enumerated fire mode.
 - <img width="2048" height="617" alt="b4cb53bd-f323-45ff-baa2-9a91bbd75cfc" src="https://github.com/user-attachments/assets/e3bcc387-f459-42a3-bc0c-6641ecba7455" />
 - <img width="898" height="361" alt="b28746b6-98b0-4672-baff-144acf930cf6" src="https://github.com/user-attachments/assets/35fbe74f-3aa6-4996-8402-65db975f0e5c" />
 - Semi-automatic fire executes a single validated shot by decrementing ammunition and spawning a projectile through the shared pipeline.
@@ -140,8 +140,8 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Alternatively, the AI could be "dumber" and *not* seek cover or otherwise behave more recklessly, but that runs the risk of creating "another generic AI" that simply runs around and shoots without considering its own safety. If the AI does not try to preserve its own life, it feels less "real." 
 
 ### Player Impact
-- Due to anchored patrol behavior, the AI always "knows" the location of the players and will patrol in that area. As such, there should never be a squad of AI patrolling several kilometers away from the nearest player. So, AI squads should always be relevant due to their proximity, and are more likely to encounter players during their patrols.
-- AI that actively tries to keep itself alive, such as by using cover, as opposed to standing out in the open, is harder to perceive as being "dumb." Killing a self-preserving AI should feel like a satisfying minor-accomplishment for the player since the AI, despite having low-health (one or two shots to kill), is more challenging to hit while it is concealed behind cover.
+- Due to anchored patrol behavior, the AI always "knows" the location of the players and will patrol in that area. As such, there should never be a squad of AI patrolling several kilometers away from the nearest player. So, AI squads should always be relevant due to their proximity and are more likely to encounter players during their patrols.
+- AI that actively tries to keep itself alive, such as by using cover, as opposed to standing out in the open, is harder to perceive as being "dumb." Killing a self-preserving AI should feel like a satisfying minor accomplishment for the player since the AI, despite having low health (one or two shots to kill), is more challenging to hit while it is concealed behind cover.
 - The AI knows that it has a ranged projectile weapon. To keep pressure, the AI will still advance on the players, but they will not be afraid to use their rifles, as opposed to charging from tens of meters away with their bayonets.
 
 ### Screenshots
@@ -214,24 +214,24 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 **Video Demo:** (Too early in development for a video)
 
 ### Design Rationale
-- In a multiplayer environment, players frequenrly diverage in spacing an intent. Some players cluster into a primary engagement zone, while others operate more independently as "lone wolves." A naive spawner that targets only the largest cluster of players risks leaving isolated players unchallenged, enabling objective completion with minimal resistance. To counter, the spawner will collect the current information of all AI squad officers and all players. Using the collected data, the spawner can determine which player is the *most* isolated from enemy AI and will use that player as the spawn-anchor. The next batch of AI will spawn (while abiding to the spawn rules) near to that isolated player.
+- In a multiplayer environment, players frequently diverge in spacing and intent. Some players cluster into a primary engagement zone, while others operate more independently as "lone wolves." A naive spawner that targets only the largest cluster of players risks leaving isolated players unchallenged, enabling objective completion with minimal resistance. To counter, the spawner will collect the current information of all AI squad officers and all players. Using the collected data, the spawner can determine which player is the *most* isolated from enemy AI and will use that player as the spawn-anchor. The next batch of AI will spawn (while abiding by the spawn rules) near that isolated player.
 
 ### Done
-- Spawned by server on game start.
+- Spawned by the server on game start.
 - Knows the number of connected players.
 - Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
-- Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated (furthest from nearest AI squad). Use that isolated player as the anchor to spawn the next batch of AI.
+- Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated (furthest from the nearest AI squad). Use that isolated player as the anchor to spawn the next batch of AI.
 - 
 
 ### Planned
 - Prevent spawning <1Km to nearest player, prevent spawning >1.5Km to nearest player. (Players should never witness AI spawning. AI should not need to travel a gargantuan distance just to get within range of the nearest player).
-- The more mission-objectives completed, the greater the squad spawn-cap? Naturally increase the spawn-cap with time?
+- The more mission objectives completed, the greater the squad spawn-cap? Naturally increase the spawn-cap with time?
 
 ### Known Bugs
 - 
 
 ### Needs Updating
-- Currently only tracks AI OFFICERS, not foot soldiers. When an Officer is killed, a new squad is spawned. If players prioritize killing Officers *only,* the game will continously spawn batches of 9 foot soldiers for every 1 officer killed. Needs a counter for AI foot soldiers so that a new squad can only be spawned when the AI officer cap is below quota AND AI soldier cap is 9 below quota. (A squad is 10 AI, 1 Officer, 9 soldiers). Only spawn those 10 AI when there is room to spawn those 10 AI.
+- Currently only tracks AI OFFICERS, not foot soldiers. When an Officer is killed, a new squad is spawned. If players prioritize killing Officers *only,* the game will continuously spawn batches of 9 foot soldiers for every 1 officer killed. Needs a counter for AI foot soldiers so that a new squad can only be spawned when the AI officer cap is below quota, and the AI soldier cap is 9 below quota. (A squad is 10 AI, 1 Officer, 9 soldiers). Only spawn those 10 AI when there is room to spawn those 10 AI.
 
 ### Tradeoffs & Alternatives
 - 
