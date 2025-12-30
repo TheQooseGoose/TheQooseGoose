@@ -13,18 +13,18 @@ All projects shown here are actively developed and intentionally presented as sn
 ### Project Context
 
 This project serves as a systems-focused demonstration of my ability to design and implement gameplay mechanics within a game engine. It exists to support and validate my independent study by providing concrete evidence of hands-on game development experience through working systems, documented design decisions, and problem-solving.
-The primary focus is on gameplay logic and system architecture, including weapons, AI behavior, and spawning, and dynamic world generation. Unreal Engine 5 is used as the chosen implementation environment, but the emphasis is placed on transferable design principles, such as state-driven logic or system extensibility, rather than engine-specific features. Visuals are intentionally deprioritized in favor of functionality. 
+The primary focus is on gameplay logic and system architecture, such as weapons, AI behavior, and dynamic world generation. Unreal Engine 5 is used as the chosen implementation environment, but the emphasis is placed on transferable design principles, such as state-driven logic or system extensibility, rather than engine-specific features. Visuals are intentionally deprioritized in favor of functionality. 
 
 ---
 
 ## Design Constraints
 - Solo Development: All gameplay systems were designed and implemented independently, with external references used only for unfamiliar engine-specific concepts.
-- Art Scope Separation: The project prioritizes gameplay systems and logic over original asset creation. Most visual assets (e.g., foliage and rocks) were sourced externally and modified as needed.
+- Art Scope Separation: The project prioritizes gameplay systems and logic over original asset creation. Most *visual* assets (e.g., foliage meshes) were sourced externally and modified as needed.
 
 ---
 
 ## Weapon System
-**Video Demo:** https://youtu.be/E1dLsZp6jjw
+**Video Demo:** https://youtu.be/E1dLsZp6jjw 
 
 ### Design Rationale
 - Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup, therefore, focuses on tuning variables such as "RPS" and "Damage" values while preserving a single, shared execution path for weapon logic.
@@ -142,7 +142,18 @@ The primary focus is on gameplay logic and system architecture, including weapon
 ### Player Impact
 - Due to anchored patrol behavior, the AI always "knows" the location of the players and will patrol in that area. As such, there should never be a squad of AI patrolling several kilometers away from the nearest player. So, AI squads should always be relevant due to their proximity, and are more likely to encounter players during their patrols.
 - AI that actively tries to keep itself alive, such as by using cover, as opposed to standing out in the open, is harder to perceive as being "dumb." Killing a self-preserving AI should feel like a satisfying minor-accomplishment for the player since the AI, despite having low-health (one or two shots to kill), is more challenging to hit while it is concealed behind cover.
-- The AI knows that it has a ranged projectile weapon. To keep pressure, the AI will still advance on the players, but they will not be afraid to use their rifles, as opposed to charging from tens of meters away with their bayonets. 
+- The AI knows that it has a ranged projectile weapon. To keep pressure, the AI will still advance on the players, but they will not be afraid to use their rifles, as opposed to charging from tens of meters away with their bayonets.
+
+### Screenshots
+<details>
+<summary><strong>Logic Reference (Blueprint)</strong></summary>
+
+<br>
+
+- This collection of screenshots does not include related logic for...
+- Note: 
+
+</details>
 
 ---
 
@@ -181,10 +192,21 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - Forests (specifically around mission objectives) are perfect circles. Add irregularity.
 
 ### Tradeoffs & Alternatives
-- Alternatively, I could have purpose-built levels, which *are* generally better built and more artistic than random generation. But that also means that, after enough playthroughs, the content gets old very fast, because nothing new ever happens, and gameplay stops feeling refreshing, and there will not be any new surprises.
+- Alternatively, I could have purpose-built levels, which *are* generally better built than random generation. But that also means that, after enough playthroughs, the content gets old very fast, because nothing new ever happens, and gameplay stops feeling refreshing.
 
 ### Player Impact
 - 
+
+### Screenshots
+<details>
+<summary><strong>Logic Reference (Blueprint)</strong></summary>
+
+<br>
+
+- This collection of screenshots does not include related logic for...
+- Note: 
+
+</details>
 
 ---
 
@@ -198,23 +220,35 @@ The primary focus is on gameplay logic and system architecture, including weapon
 - Spawned by server on game start.
 - Knows the number of connected players.
 - Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
+- Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated (furthest from nearest AI squad). Use that isolated player as the anchor to spawn the next batch of AI.
+- 
 
 ### Planned
-- Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated. (Get the current locations of all the (alive) squad officers and all the locations of the players, and use that data to figure out which player has the least AI near them. Use THAT player as the target anchor, and spawn the next batch of AI in relative proximity. 
 - Prevent spawning <1Km to nearest player, prevent spawning >1.5Km to nearest player. (Players should never witness AI spawning. AI should not need to travel a gargantuan distance just to get within range of the nearest player).
 - The more mission-objectives completed, the greater the squad spawn-cap? Naturally increase the spawn-cap with time?
 
 ### Known Bugs
-- Trying to design an inexpensive system to collect the locations of all AI officers at the time of the tick. Store collected data in the Game State, let the AI Spawner blueprint access that data. I've clearly done something wrong since I crashed Unreal Engine in one of my tests. I think I know why, but I still need to diagnose for certain.
+- 
 
 ### Needs Updating
--
+- Currently only tracks AI OFFICERS, not foot soldiers. When an Officer is killed, a new squad is spawned. If players prioritize killing Officers *only,* the game will continously spawn batches of 9 foot soldiers for every 1 officer killed. Needs a counter for AI foot soldiers so that a new squad can only be spawned when the AI officer cap is below quota AND AI soldier cap is 9 below quota. (A squad is 10 AI, 1 Officer, 9 soldiers). Only spawn those 10 AI when there is room to spawn those 10 AI.
 
 ### Tradeoffs & Alternatives
 - 
 
 ### Player Impact
 - 
+
+### Screenshots
+<details>
+<summary><strong>Logic Reference (Blueprint)</strong></summary>
+
+<br>
+
+- This collection of screenshots does not include related logic for...
+- Note: 
+
+</details>
 
 ---
   
