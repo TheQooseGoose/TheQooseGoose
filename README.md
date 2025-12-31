@@ -234,10 +234,14 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="818" height="344" alt="image" src="https://github.com/user-attachments/assets/e43075b7-a919-460d-8f09-2f996b69e8a8" />
 - Now that the house has been successfully spawned, we need to store its location in the array so that its location can be tested later as new houses spawn.
 - <img width="293" height="227" alt="image" src="https://github.com/user-attachments/assets/60fe8e42-3c88-4bfb-a60b-2f40a6fd8370" />
-
-
-
-
+- Going back to the "determineNumObjectives" function, now that the objectives and towns (if any) have finished spawning, we can call the "startSpawningHouses" Custom Event, which itself just calls the "determineNumHousesToSpawn" function. This is used to spawn *individual* houses around the level, houses that are not associated with a town, and are just serving as props that the players can happen upon.
+- <img width="586" height="307" alt="image" src="https://github.com/user-attachments/assets/c9a6f1ef-8a9b-49c2-b32d-b5aec4def4dc" />
+-
+-
+-
+-
+-
+-
 
 </details>
 
