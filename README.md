@@ -236,12 +236,44 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="293" height="227" alt="image" src="https://github.com/user-attachments/assets/60fe8e42-3c88-4bfb-a60b-2f40a6fd8370" />
 - Going back to the "determineNumObjectives" function, now that the objectives and towns (if any) have finished spawning, we can call the "startSpawningHouses" Custom Event, which itself just calls the "determineNumHousesToSpawn" function. This is used to spawn *individual* houses around the level, houses that are not associated with a town, and are just serving as props that the players can happen upon.
 - <img width="586" height="307" alt="image" src="https://github.com/user-attachments/assets/c9a6f1ef-8a9b-49c2-b32d-b5aec4def4dc" />
--
--
--
--
--
--
+- Using the seed-based RNGMaster, we determine the number of individual houses that will be spawned somewhere in the level. Using that number, we run a loop that calls the "spawnIndividualHouses" function, which is responsible for actually spawning the blueprints.
+- <img width="923" height="344" alt="image" src="https://github.com/user-attachments/assets/f3fb6637-4238-4304-aa77-0a561e89dc66" />
+- "spawnIndividualHouses" first gets the (currently hard-defined) boundaries of the level and generates a random coordinate. 
+- <img width="929" height="405" alt="image" src="https://github.com/user-attachments/assets/e9289914-6bd5-4f72-aea9-577d2344bbd9" />
+- Then we conduct a line trace to determine the elevation of the landscape, and set the spawn location.
+- <img width="581" height="251" alt="image" src="https://github.com/user-attachments/assets/3e925720-da1e-42da-b944-de65a65a27ef" />
+- Using the "Impact Normal" of the Hit Result, we test to see if the slope of the landscape at the coordinate is less than or equal to twenty degrees. If the slope is too extreme, the function will call itself to run again and find a new location. This section could be improved by adding a safety net for "max retries," just so the function does not infinitely call itself. 
+- <img width="545" height="160" alt="image" src="https://github.com/user-attachments/assets/b924388e-befa-4d2b-8c34-73d502485b13" />
+- <img width="288" height="167" alt="image" src="https://github.com/user-attachments/assets/a510ab23-507b-4ae7-978a-ecd301dd5174" />
+- Next, we conduct a test to see if the random coordinates overlap with any other houses. If the location is invalid, then the function will call itself. Again, this could be improved with a safety net. 
+- <img width="877" height="197" alt="image" src="https://github.com/user-attachments/assets/0a63ca47-2bb4-4949-ad01-aed2a818f6a6" />
+- If everything passes, then a house is selected at random and spawned into the world with a random rotation.
+- <img width="882" height="344" alt="image" src="https://github.com/user-attachments/assets/b923cee5-7f3e-488b-9ecc-15a0b3c61438" />
+- When all the individual houses finish spawning, we can define the number of house blueprints that exist in the level. When a client joins a session, they have to wait until they receive all the data from the houses before their local world generation can begin. Without this system, the client will initiate spawners for meshes like trees, without their session knowing where the blueprints are placed. As a consequence, clients risk spawning things like trees or rocks in places where the host did not, since the client-side spawners, without knowing the locations of existing blueprints (since the client is still joining and receiving data), would pass checks that otherwise did not pass for the host. I hope that makes sense.
+- <img width="743" height="221" alt="image" src="https://github.com/user-attachments/assets/0ae8d7ca-4304-45ef-98a5-36ebc500a0d2" />
+- Now that all the important blueprints have been placed into the level, we can start spawning the HISMs, such as trees, rocks, and bushes. For this example, we will examine the logic that the host needs to run for themselves, since the joining clients will use logic that is slightly different. 
+- <img width="331" height="367" alt="image" src="https://github.com/user-attachments/assets/7e923001-d695-4310-b6b2-182f35abc3e4" />
+- (The attached screenshot skips some logic. That logic just retrieves the generated seed and makes a cast to the game state). Going back to when we stored the objective locations, this is where those locations are used, starting with the "Mission Objective HISM Spawner" blueprint. It is spawned into the world and is fed the seed and the locations of the mission objectives. 
+- <img width="433" height="346" alt="image" src="https://github.com/user-attachments/assets/7782a5ae-7f5f-4812-889b-ddb1db139bf3" />
+- Just so we can easily reference the variables later, as needed, the variables are "set" at the very start of the blueprint's execution after spawning. 
+- <img width="541" height="170" alt="image" src="https://github.com/user-attachments/assets/d50c3b78-c79d-411d-8c74-7935cb0c9fdd" />
+- Starting with the mission objectives meant to be surrounded by forest, we feed a loop the array of locations. Currently, for each location, the properties will be the same because I never alternate the "RNGMaster" variable. For example, if there are two forest locations stored in the array, and the "Random Float in Range" node comes up with 7654cm for the radius of the first forest, the second forest will also be 7654cm in radius. The same rule applies to the "numToSpawn" (number of trees to spawn per forest). That "numToSpawn" is used to iterate a "For" loop for "numToSpawn" times (300 to 400 trees per mission-objective-surrounding forest). 
+- <img width="997" height="191" alt="image" src="https://github.com/user-attachments/assets/3965eb19-14a7-460d-b506-91c1ab99b8dc" />
+- Now that we have a chosen radius and number of trees to spawn, we can start by creating a circular area around the mission objective and spawning trees within that circle.
+- <img width="1031" height="294" alt="image" src="https://github.com/user-attachments/assets/8c84f6e1-7e30-4fee-a437-28b0fd3d8628" />
+- We pick a random coordinate INSIDE the circle and conduct a line trace.
+- <img width="931" height="343" alt="image" src="https://github.com/user-attachments/assets/c49b08bb-3cf7-425f-b793-fe993a14cd7a" />
+- We break the results of the line trace, set the location, and determine if the hit actor is equal to the landscape. If it is not the landscape, do not spawn the tree. Otherwise, pick a random tree (or bush) HISM from the "Pine Forest" array of HISMs. Get a random scale and rotation for each tree, then add the instance into the world at the verified location. Now this specific mission objective is surrounded by a forest!
+- <img width="515" height="337" alt="image" src="https://github.com/user-attachments/assets/f20b2d16-0978-4107-8c6b-7c9041784a2f" />
+- Once all forest objectives have finished spawning the trees around themselves, the Military Base objectives can now get to work spawning military base HISM meshes around themselves. It works the same way as the tree spawner, except that it does not spawn in a perfectly circular area, but rather, a perfectly square area. At this time, I do not have any props for military bases (such as sandbags, guard towers, or pillboxes). As a result, the logic (currently) concludes with a line trace, without ever spawning instances. 
+- <img width="1055" height="305" alt="image" src="https://github.com/user-attachments/assets/6abb8a54-1b12-44e5-a8f6-d48d2f062426" />
+- <img width="1118" height="292" alt="image" src="https://github.com/user-attachments/assets/9373dde8-8577-46c5-832f-75e5f753344c" />
+
+
+
+
+
+
 
 </details>
 
