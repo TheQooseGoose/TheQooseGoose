@@ -101,7 +101,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ---
 
 - ## Basic AI
-**Video Demo:** (Needs video)
+**Video Demo:** (No Video Demonstration yet! The AI is too underdeveloped to be worth showing off so far.)
 
 ### Design Rationale
 - AI behavior prioritizes self-preservation as a core decision driver. Enemies continuously evaluate threat and positioning to decide when to seek cover, advance, or apply pressure, rather than remaining exposed until shot. Under active threat, the AI prioritizes defensive positioning to maintain survivability and, by extension, continued relevance in the encounter. When a player shifts their attention elsewhere, such as by responding to another oncoming threat, that window is treated as an opportunity to reposition, advance, and apply pressure safely. Thus, the AI avoids reckless, "stupid" aggression and instead favors behavior that mirrors believable combat decision-making, as opposed to static stand-and-shoot (without cover or concealment) exchanges.
@@ -165,7 +165,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 
 ### Done
 - (0) Sharing the world-seed with the client upon client login
-  - (0.5) If not the host, wait to receive server-data. Do NOT start the spawners UNTIL all major BPs have been successfully received. Fixes replication bug where a tree (or something) might exist in one place for the host, but exist in another place for the client. 
+  - (0.5) If not the host, wait to receive server data. Do NOT start the spawners UNTIL all major BPs have been successfully received. Fixes replication bug where a tree (or something) might exist in one place for the host, but exist in another place for the client. 
 - (1) Mission-Objective Spawning. Place a random number of mission objectives in random locations. Store those locations.
 - (2) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
 - (3) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
