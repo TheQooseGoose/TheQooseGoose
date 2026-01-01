@@ -286,6 +286,8 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="928" height="380" alt="image" src="https://github.com/user-attachments/assets/783da2ea-6f79-4338-add1-31da9fb5a5f1" />
 - Finally, we end in some more familiar territory, and simply conduct a line trace at a given location and determine if the location is valid. If so, then a random HISM is spawned. The end result is clusters of 2D-noise-generated forests.
  - <img width="689" height="342" alt="image" src="https://github.com/user-attachments/assets/10a0b705-5e4d-4df3-9e3d-ef03e9714dfd" />
+ - The final blueprint used in world generation is for spawning trees and bushes at random locations, instead of defined clusters. This works the same as the spawner for individual houses (houses outside of towns), so I will not share it for the sake of conciseness. The only difference is that it runs a loop for a few thousand tries (to fully populate the level with foliage), instead of a few dozen.
+ - There is not yet dynamic generation for the landscape itself, but I intend to add this feature at a much later date. 
 
 
 </details>
