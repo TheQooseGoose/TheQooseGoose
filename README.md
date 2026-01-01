@@ -268,11 +268,24 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Once all forest objectives have finished spawning the trees around themselves, the Military Base objectives can now get to work spawning military base HISM meshes around themselves. It works the same way as the tree spawner, except that it does not spawn in a perfectly circular area, but rather, a perfectly square area. At this time, I do not have any props for military bases (such as sandbags, guard towers, or pillboxes). As a result, the logic (currently) concludes with a line trace, without ever spawning instances. 
 - <img width="1055" height="305" alt="image" src="https://github.com/user-attachments/assets/6abb8a54-1b12-44e5-a8f6-d48d2f062426" />
 - <img width="1118" height="292" alt="image" src="https://github.com/user-attachments/assets/9373dde8-8577-46c5-832f-75e5f753344c" />
-
-
-
-
-
+- Now that mission objectives are spawned and have been provided with an interesting setting, we can start populating the level with non-critical scenery, such as random forests.
+- <img width="506" height="332" alt="image" src="https://github.com/user-attachments/assets/f3fa3f99-3d27-4f47-ace4-41e96c54081e" />
+- These forests will spawn using 2D noise. To do that, we first need to set up the noise wrapper.
+- <img width="589" height="378" alt="image" src="https://github.com/user-attachments/assets/2719202c-f6fc-4c8f-91b6-eafc23a00e4e" />
+- To actually start using the 2D noise, we first need to divide the boundaries of the level into cells
+- <img width="754" height="314" alt="image" src="https://github.com/user-attachments/assets/b7e328f8-b5c5-4bc3-958d-8741fd5de30a" />
+- For added safety, we can estimate the max capacity/tries per cell.
+- <img width="428" height="304" alt="image" src="https://github.com/user-attachments/assets/5e7db008-fb07-4bfe-b27e-4324e1fa8720" />
+- Now we need to iterate through each cell.
+- <img width="560" height="343" alt="image" src="https://github.com/user-attachments/assets/e2304147-04f8-4548-b478-02e12a677415" />
+- We can determine the density. The noise defines *where*, but the density, here, defines *how much.*
+- <img width="682" height="389" alt="image" src="https://github.com/user-attachments/assets/a8b35b96-5df6-4d46-bfb7-c0a6689185b4" />
+- Some cells may be empty. This checks if a cell is participating at all. If a cell *is* participating, it is assigned its own random identity.
+- <img width="665" height="305" alt="image" src="https://github.com/user-attachments/assets/27623c01-8f35-4a4c-b00d-0deaa3b2d841" />
+- This step generates candidate spawn positions by performing multiple bounded random samples inside a single grid cell. This allows natural-looking variation within each cell.
+- <img width="928" height="380" alt="image" src="https://github.com/user-attachments/assets/783da2ea-6f79-4338-add1-31da9fb5a5f1" />
+- Finally, we end in some more familiar territory, and simply conduct a line trace at a given location and determine if the location is valid. If so, then a random HISM is spawned. The end result is clusters of 2D-noise-generated forests.
+ - <img width="689" height="342" alt="image" src="https://github.com/user-attachments/assets/10a0b705-5e4d-4df3-9e3d-ef03e9714dfd" />
 
 
 </details>
