@@ -133,7 +133,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 
 ### Needs Updating
 - Combat Behavior has no substance. Currently, it is "Go to 0.00, 0.00, 0.00."
-- Experiment with different patrol ranges. Larger area = less-likely to encounter player.
+- Experiment with different patrol ranges. Larger area = less likely to encounter a player.
 
 ### Tradeoffs & Alternatives
 - If all the AI is actively seeking cover and running a lot of checks, the AI might be more expensive to run in bulk. In exchange for less "dumb" AI, there will *probably* have to be less AI for the sake of performance.
@@ -158,7 +158,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ---
 
 ## World Generation
-**Video Demo:** (Needs video)
+**Video Demo:** https://youtu.be/RqAgL0uljjY
 
 ### Design Rationale
 - World layout is driven by dynamic generation to prioritize replayability and prevent encounters from becoming predictable or mundane over time. Unlike static, purpose-built levels, dynamically generated environments vary terrain, structures, and sightlines between sessions, keeping positioning and threat assessment contextual rather than memorized. By keeping level generation dynamic, there is also long-term scalability, allowing new variety to be introduced through additional assets or the adjustment of parameters, as opposed to full level redesigns. 
