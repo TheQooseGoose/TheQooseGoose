@@ -305,11 +305,11 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Knows the number of connected players.
 - Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
 - Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated (furthest from the nearest AI squad). Use that isolated player as the anchor to spawn the next batch of AI.
-- 
+- Prevent AI from spawning too far away (far enough away to be irrelevant) and prevent AI from spawning too near (prevent AI from spawning randomly atop a player's current location).
 
 ### Planned
-- Prevent spawning <1Km to nearest player, prevent spawning >1.5Km to nearest player. (Players should never witness AI spawning. AI should not need to travel a gargantuan distance just to get within range of the nearest player).
-- The more mission objectives completed, the greater the squad spawn-cap? Naturally increase the spawn-cap with time?
+- Considering: The more mission objectives completed, the greater the squad spawn-cap?
+- Considering: Naturally increase the spawn-cap with time?
 
 ### Known Bugs
 - 
