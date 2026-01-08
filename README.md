@@ -50,7 +50,8 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Aim offset (reduction in accuracy) when moving or sprinting
 
 ### Known Bugs
-- Projectiles *have* collision and fully interact with characters and blueprints, but projectiles pass straight through HISMs (trees, rocks, etc) and the landscape.
+- Projectiles *have* collision and fully interact with characters and blueprints, but projectiles pass straight through HISMs (trees, rocks, etc) and the landscape. It should be an easy fix; I just have not looked into it yet.
+- Minor issue with the bolt-action rifle, where it incorrectly outputs my firing-noise placeholder, even though the bolt has not been cycled. It should be an easy fix; I just have not looked into it yet.
 
 ### Needs Updating
 - Extra comments and cleanup would not hurt.
