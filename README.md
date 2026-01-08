@@ -125,11 +125,11 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Morale. If the AI squad takes too many casualties too quickly or loses their officer, squads will either be fearful and rout (and later despawn), or be invigorated and bayonet-charge.
 - Behavioral differences based on enemy faction. One faction might have AI that is hyper-aggressive, whereas another faction might rely on stalking and ambushes.
 - LOTS of VA. Keep the AI shouting orders.
-- Formations??? Ex: March in column (Patrol), 'L' formation (combat)
+- Formations??? Ex: March in column (Patrol), 'L' combat formation (overlapping fire)
 - Out of ammo? Seek cover! -> Reload -> Continue (AI will not stand out in the open while it does not have ammunition with which to defend itself). 
 
 ### Known Bugs
-- 
+- Not a bug, but I recently discovered the existence of "AIPerception," which is more modern and complex than "PawnSensing." I need to research how it works and how to implement it well.
 
 ### Needs Updating
 - Combat Behavior has no substance. Currently, it is "Go to 0.00, 0.00, 0.00."
