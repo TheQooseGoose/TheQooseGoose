@@ -296,7 +296,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ---
 
 ## AI Spawner
-**Video Demo:** (Too early in development for a video)
+**Video Demo:** (Need demonstration video)
 
 ### Design Rationale
 - In a multiplayer environment, players frequently diverge in spacing and intent. Some players cluster into a primary engagement zone, while others operate more independently as "lone wolves." A naive spawner that targets only the largest cluster of players risks leaving isolated players unchallenged, enabling objective completion with minimal resistance. To counter, the spawner will collect the current information of all AI squad officers and all players. Using the collected data, the spawner can determine which player is the *most* isolated from enemy AI and will use that player as the spawn-anchor. The next batch of AI will spawn (while abiding by the spawn rules) near that isolated player.
@@ -307,16 +307,19 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
 - Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated (furthest from the nearest AI squad). Use that isolated player as the anchor to spawn the next batch of AI.
 - Prevent AI from spawning too far away (far enough away to be irrelevant) and prevent AI from spawning too near (prevent AI from spawning randomly atop a player's current location).
+- Tracks the number of alive AI, officers, or common soldiers, and knows when to spawn another squad of 10 without exceeding the cap. (Now considers the number of common soldiers, instead of my temporary build, which spawned a new squad for every officer's death).
+- Spawns 1 Officer and 9 Foot Soldiers in a selected area.
 
 ### Planned
 - Considering: The more mission objectives completed, the greater the squad spawn-cap?
 - Considering: Naturally increase the spawn-cap with time?
+- Squad Assigning: When a squad is spawned, assign the summoned foot soldiers to their officer.
 
 ### Known Bugs
 - 
 
 ### Needs Updating
-- Currently only tracks AI OFFICERS, not foot soldiers. When an Officer is killed, a new squad is spawned. If players prioritize killing Officers *only,* the game will continuously spawn batches of 9 foot soldiers for every 1 officer killed. Needs a counter for AI foot soldiers so that a new squad can only be spawned when the AI officer cap is below quota, and the AI soldier cap is 9 below quota. (A squad is 10 AI, 1 Officer, 9 soldiers). Only spawn those 10 AI when there is room to spawn those 10 AI.
+- All members of a squad currently spawn in a single location, resulting in some AI fusing together into a single hideous creation. Needs logic to *distribute* the AI in *valid* locations *around* the selected anchor point.
 
 ### Tradeoffs & Alternatives
 - 
