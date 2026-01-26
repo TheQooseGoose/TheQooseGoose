@@ -108,16 +108,19 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - AI behavior prioritizes self-preservation as a core decision driver. Enemies continuously evaluate threat and positioning to decide when to seek cover, advance, or apply pressure, rather than remaining exposed until shot. Under active threat, the AI prioritizes defensive positioning to maintain survivability and, by extension, continued relevance in the encounter. When a player shifts their attention elsewhere, such as by responding to another oncoming threat, that window is treated as an opportunity to reposition, advance, and apply pressure safely. Thus, the AI avoids reckless, "stupid" aggression and instead favors behavior that mirrors believable combat decision-making, as opposed to static stand-and-shoot (without cover or concealment) exchanges.
 
 ### Done
+- Projectile strikes to the limbs deal half damage. Projectile strikes to the torso deal normal damage. Projectile strikes to the head deal double damage.
 - Replaced outdated "Pawn Sensing" component with more advanced "AI Perception" component.
+- Added AI Prediction Sense. When the AI has lost sight of the player, the AI will travel to the assumed location.
+  - Patched bug where the AI would travel to the *prior* last known location. 
+- After arriving at the assumed last known location, if the player is *still* not found, search the general area and *then* return to normal patrol behavior.
 - Patrol Behavior:
   - To always be relevant, patrols are anchored around the *nearest* player (Anchors can change).
-  - Go to a randomly selected point within the bounds of the area anchored to the nearest player. Repeat until entering combat.
-  - Projectile strikes to the limbs deal half damage. Projectile strikes to the torso deal normal damage. Projectile strikes to the head deal double damage.
+  - Go to a randomly selected point within the bounds of the circular area anchored to the nearest player. Repeat until entering combat.
 - Becoming Alert:
   - Has different "alert" ranges depending on what the player in the vision cone is doing (Struggles to find prone players, is moderate at finding crouching players, easily sees standing or running players).
   - Can become alert by detecting a bullet from the player. The player does not need to get a hit or a kill to alert the enemy. The mere presence of a bullet will put the AI into the combat branch.
 - Combat Behavior:
-  - Currently just chases the player or moves to their last *known* location. If the player is not found after reaching the last known location, resume patrol.
+  - Nothing yet.
 
 ### Planned
 - Self-preservation behavior. Actively seek cover when alert && the player is looking in their direction.
@@ -134,8 +137,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - 
 
 ### Needs Updating
-- Experiment with different patrol ranges. Larger area = less likely to encounter a player.
-- When moving to a player's last known location, and the player is not found, instead of reverting back to the basic patrol, search around that last-known area, instead of walking away to patrol elsewhere. Search for the player!
+-
 
 ### Tradeoffs & Alternatives
 - If all the AI is actively seeking cover and running a lot of checks, the AI might be more expensive to run in bulk. In exchange for less "dumb" AI, there will *probably* have to be less AI for the sake of performance.
