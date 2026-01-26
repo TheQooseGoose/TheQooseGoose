@@ -20,6 +20,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ## Design Constraints
 - Solo Development: All gameplay systems were designed and implemented independently, with external references used only for unfamiliar engine-specific concepts.
 - Art Scope Separation: The project prioritizes gameplay systems and logic over original asset creation. Most *visual* assets (e.g., foliage meshes) were sourced externally and modified as needed.
+- I am now returning to college as a transfer student to earn a BS in Game Design. During that time, Fall 2026 - Spring 2028, production will slow dramatically, as I will be preoccupied with more pressing and immediate matters.
 
 ---
 
