@@ -121,10 +121,9 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
   - Has different "alert" ranges depending on what the player in the vision cone is doing (Struggles to find prone players, is moderate at finding crouching players, easily sees standing or running players).
   - Can become alert by detecting a bullet from the player. The player does not need to get a hit or a kill to alert the enemy. The mere presence of a bullet will put the AI into the combat branch.
 - Combat Behavior:
-  - Nothing yet.
+  - Cover seeking using the Environmental Query System
 
 ### Planned
-- Self-preservation behavior. Actively seek cover when alert && the player is looking in their direction.
 - Offensive Behavior. When alert && the player is *not* looking in their direction, advance toward the player.
 - Squad Behavior. Officers are the brain of the squad and direct movement. Foot soldiers will be tied to a limited area surrounding their officer. When the officer dies, the movement restrictions are gone, and the squad should *theoretically* dissolve without order.
 - Anti-crowding. When seeking cover, prevent AI from crowding into a single spot. If no nearby cover is available, crouch in place.
@@ -135,7 +134,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Out of ammo? Seek cover! -> Reload -> Continue (AI will not stand out in the open while it does not have ammunition with which to defend itself). 
 
 ### Known Bugs
-- 
+- Cover-seeking behavior is a little wonky. I need to unwonk it.
 
 ### Needs Updating
 -
