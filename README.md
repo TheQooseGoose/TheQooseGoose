@@ -163,6 +163,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 
 ## World Generation
 **Video Demo:** https://youtu.be/RqAgL0uljjY
+(Dated Video, needs update!!!)
 
 ### Design Rationale
 - World layout is driven by dynamic generation to prioritize replayability and prevent encounters from becoming predictable or mundane over time. Unlike static, purpose-built levels, dynamically generated environments vary terrain, structures, and sightlines between sessions, keeping positioning and threat assessment contextual rather than memorized. By keeping level generation dynamic, there is also long-term scalability, allowing new variety to be introduced through additional assets or the adjustment of parameters, as opposed to full level redesigns. 
@@ -170,17 +171,17 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ### Done
 - (0) Sharing the world-seed with the client upon client login
   - (0.5) If not the host, wait to receive server data. Do NOT start the spawners UNTIL all major BPs have been successfully received. Fixes replication bug where a tree (or something) might exist in one place for the host, but exist in another place for the client. 
-- (1) Mission-Objective Spawning. Place a random number of mission objectives in random locations. Store those locations.
-- (2) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
-- (3) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
-- (4) Seed-Based House Spawner. (Places a random number of houses in random locations). 
-- (5) Seed-Based Foliage Generator. (Places trees, bushes, and rocks in random locations and in a random density).
+- (1) Dynamic terrain generation using the Procedural Mesh Component and customizable Perlin Noise. Replaced "landscapeGrassType" (which only works on 'Landscape' meshes) with the PCG system (Which can work on Procedural Meshes).
+- (2) Mission-Objective Spawning. Place a random number of mission objectives in random locations. Store those locations.
+- (3) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
+- (4) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
+- (5) Seed-Based House Spawner. (Places a random number of houses in random locations). 
+- (6) Seed-Based Foliage Generator. (Places trees, bushes, and rocks in random locations and in a random density).
 - Universal Landscape Material. Spawns grass and flower meshes atop itself; no need to manually paint. The steeper the slope, the yellower (drier) the terrain.
 - Completed logic for a simple "Capture and Hold" objective.
 - Complex foliage materials. Using Runtime Virtual Textures, foliage like grass, bushes, and flowers inherit their colors from the landscape beneath it. Sloped, yellow hills will have yellow foliage.
 
 ### Planned
-- Dynamic landscape generator. Rather than importing different heightmap scans of random fields in rural Canada, dynamically generate the landscape using the seed. Massive project, but it would make each level more dynamic.
 - Rivers. It would be nice to have mission objectives to seize, defend, or demolish bridges. 
 - More mission objectives, static or otherwise (Such as "Kill this Officer," "Destroy this Convoy," "Steal this," "Sabotage that," "Destroy these," "Liberate Those.")
 - More house models
