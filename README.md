@@ -20,12 +20,11 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ## Design Constraints
 - Solo Development: All gameplay systems were designed and implemented independently, with external references used only for unfamiliar engine-specific concepts.
 - Art Scope Separation: The project prioritizes gameplay systems and logic over original asset creation. Most *visual* assets (e.g., foliage meshes) were sourced externally and modified as needed.
-- I am now returning to college as a transfer student to earn a BS in Game Design. During that time, Fall 2026 - Spring 2028, production will slow dramatically, as I will be preoccupied with more pressing and immediate matters.
 
 ---
 
 ## Weapon System
-**Video Demo:** [https://youtu.be/E1dLsZp6jjw ](https://youtu.be/_pvW3DIAXeA)
+**Video Demo:**
 
 ### Design Rationale
 - Weapon behavior differences are handled through a single configurable parent weapon class rather than separate blueprints per weapon type. An enumerated firing mode (e.g., Semi-Auto, Full-Auto, Bolt-Action) defines the active behavior path, with logic branching resolved through a switch on the enumerator. This approach avoids blueprint proliferation and keeps core weapon logic centralized, while behavior-specific differences are isolated behind clearly defined state paths. New weapons are introduced as lightweight child classes of the base weapon blueprint, with behavior defined primarily through configuration rather than custom logic. Per-weapon setup, therefore, focuses on tuning variables such as "RPS" and "Damage" values while preserving a single, shared execution path for weapon logic.
@@ -34,10 +33,10 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Parent weapon class (stores the main logic), child classes inherit the logic and use their own variables such as "damage," "magazineCapacity," and "RPS." Each weapon can behave differently just by changing variables.
 - Completed separate paths to handle different behavior between full-auto, semi-auto, and bolt-action weapons.
 - Spawning projectiles when the player *has* ammo
-- Projectiles travel where the player is looking (if we disregard bullet-drop), regardless of using first-person or third-person camera.
+- Projectiles travel where the player is looking (if we disregard bullet drop), regardless of using first-person or third-person camera.
 - Replicated projectiles. (Fixed issue where client would watch the host fire two bullets in two different directions).
 - Animation montages (weapon recoil) when firing and not out of ammo. Different montage for different positions. Ex: Prone firing vs. Stand firing
-- AI dealt damage based on the struck bone in the skeletal mesh. Ex: A hit to a limb does half damage. A hit to the torso does normal damage. A hit to the head deals double damage.
+- AI deals damage based on the struck bone in the skeletal mesh. Ex: A hit to a limb does half damage. A hit to the torso does normal damage. A hit to the head deals double damage.
 - Prevent the player from discarding a full magazine. When discarding a non-empty magazine, the ammo is wasted.
 - Updated animation montage section (weapon recoil animations): Uses fewer branches, is less clunky, and less complex. 
 
@@ -46,7 +45,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Bayonets/melee
 - More weapons and weapon MODELS
 - Reload animation montages
-- Sound (Muzzle blast, reloading, projectile-whistle), VA for characters ("I need ammo!", etc)
+- Sound (Muzzle blast, reloading, projectile whistle), VA for characters ("I need ammo!", etc)
 - Particles (Muzzle blast, shell-eject)
 - Aim offset (reduction in accuracy) when moving or sprinting
 
@@ -73,9 +72,9 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - This collection of screenshots does not include related logic for aiming/camera-zoom, the animation graph, or where player booleans that prevent weapon firing, such as "isInTransition?", are defined.
 - Note: Some areas reflect ongoing iteration. Minor refactors (such as further function consolidation) have been identified but deferred in favor of validating system behavior and design direction.
 
-- Player input is validated locally and forwarded to authoritative server events, with transition-state checks preventing invalid fire requests. (Ex: Prevent player from firing while moving TO or FROM prone).
+- Player input is validated locally and forwarded to authoritative server events, with transition-state checks preventing invalid fire requests. (e.g., prevent player from firing while moving TO or FROM prone).
 - <img width="602" height="332" alt="IA_Shoot" src="https://github.com/user-attachments/assets/fa487fb9-36de-4562-a2e2-a5d687672e2e" />
-- Weapon firing behavior is resolved server-side using a unified execution path, with fore mode determining whether shots are timer-driven (full auto) or single-execution (semi-auto/bolt-action).
+- Weapon firing behavior is resolved server-side using a unified execution path, with fire mode determining whether shots are timer-driven (full auto) or single-execution (semi-auto/bolt-action).
 - <img width="2048" height="623" alt="16c3d95d-c5c5-4c01-856b-fe5564e891cf" src="https://github.com/user-attachments/assets/9493722d-c783-4c32-89cb-426d3fed1f55" />
 - Weapon firing is gated by server authority, validated ownership, and weapon state before any behavior-specific logic is executed. A centralized validation gate prevents invalid firing, after which, weapon behavior branches cleanly to the enumerated fire mode.
 - <img width="2048" height="617" alt="b4cb53bd-f323-45ff-baa2-9a91bbd75cfc" src="https://github.com/user-attachments/assets/e3bcc387-f459-42a3-bc0c-6641ecba7455" />
@@ -112,7 +111,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Projectile strikes to the limbs deal half damage. Projectile strikes to the torso deal normal damage. Projectile strikes to the head deal double damage.
 - Replaced outdated "Pawn Sensing" component with more advanced "AI Perception" component.
 - Added AI Prediction Sense. When the AI has lost sight of the player, the AI will travel to the assumed location.
-  - Patched bug where the AI would travel to the *prior* last known location. 
+  - Patched a bug where the AI would travel to the *prior* last known location. 
 - After arriving at the assumed last known location, if the player is *still* not found, search the general area and *then* return to normal patrol behavior.
 - Patrol Behavior:
   - To always be relevant, patrols are anchored around the *nearest* player (Anchors can change).
@@ -134,7 +133,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Out of ammo? Seek cover! -> Reload -> Continue (AI will not stand out in the open while it does not have ammunition with which to defend itself). 
 
 ### Known Bugs
-- Cover-seeking behavior is a little wonky. I need to unwonk it.
+- Cover-seeking behavior is a little wonky. I need to un-wonk it.
 
 ### Needs Updating
 -
@@ -162,8 +161,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 ---
 
 ## World Generation
-**Video Demo:** https://youtu.be/RqAgL0uljjY
-(Dated Video, needs update!!!)
+**Video Demo:**
 
 ### Design Rationale
 - World layout is driven by dynamic generation to prioritize replayability and prevent encounters from becoming predictable or mundane over time. Unlike static, purpose-built levels, dynamically generated environments vary terrain, structures, and sightlines between sessions, keeping positioning and threat assessment contextual rather than memorized. By keeping level generation dynamic, there is also long-term scalability, allowing new variety to be introduced through additional assets or the adjustment of parameters, as opposed to full level redesigns. 
@@ -176,7 +174,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - (3) Using the stored locations, randomly choose between spawning one of these *around* a mission objective: Town, Forest, Military Base, Nothing (empty field).
 - (4) 2D Noise, Seed-Based Forest Generator. (Randomly populates landscape with clusters of trees and bushes).
 - (5) Seed-Based House Spawner. (Places a random number of houses in random locations). 
-- (6) Seed-Based Foliage Generator. (Places trees, bushes, and rocks in random locations and in a random density).
+- (6) Seed-Based Foliage Generator. (Places trees, bushes, and rocks in random locations and at a random density).
 - Universal Landscape Material. Spawns grass and flower meshes atop itself; no need to manually paint. The steeper the slope, the yellower (drier) the terrain.
 - Completed logic for a simple "Capture and Hold" objective.
 - Complex foliage materials. Using Runtime Virtual Textures, foliage like grass, bushes, and flowers inherit their colors from the landscape beneath it. Sloped, yellow hills will have yellow foliage.
@@ -214,7 +212,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="454" height="368" alt="image" src="https://github.com/user-attachments/assets/d7fde572-d245-4f48-922b-1e2795571d0c" />
 - The randomly generated seed is used to create an "RNGMaster," which is used to replicate the results of a "Random" node, since, when run independently on a device, a host, and a client will get different results. That number is then used to determine the random number (between 4 and 8) of objectives that will spawn in the level. Then, a loop will run for that 'random number' amount of times until all objectives have spawned in the level.
 - <img width="947" height="407" alt="image" src="https://github.com/user-attachments/assets/375d2c47-9d8f-4810-83f1-71e90909431f" />
-- Using the coordinates of two opposite corners of the level boundaries, using two "Random" nodes, generate a random coordinate.
+- Using the coordinates of two opposite corners of the level boundaries using two "Random" nodes, generate a random coordinate.
   - Note: The coordinates are currently hard-defined since I only have one level. If I ever get more levels or new boundaries to experiment with, I am aware that I will need to be more creative.
 - <img width="716" height="303" alt="image" src="https://github.com/user-attachments/assets/45a39f55-b9a1-48c9-8ef3-76f5c64cadcc" />
 - Using the random coordinate, a line trace is conducted to determine the elevation of the terrain. This way, a mission objective is spawned ON the landscape, and not floating in the air, or worse yet, totally inaccessible underground. To settle the spawned mesh into the terrain a little, it is moved down by 15.0cm. 
@@ -222,8 +220,8 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - Before the "SpawnActor" node is executed, a random objective is chosen from an array.
   - Note: At the time of writing, I only have a simple but functional "Capture and Hold" objective in the array, since it is the only semi-completed mission objective blueprint that I have.
 - <img width="671" height="175" alt="image" src="https://github.com/user-attachments/assets/0a195c27-80b1-4b25-a2a2-979cec7f514d" />
-- Now the level has between four and eight mission objectives for the players to complete. But, because the level is currently a barren landscape, we want to make the surroundings a little more interesting. So, using a "Switch on Int" and a random number, each objective has a chance to spawn one of three things around itself: If 0, a Town. If 1, a forest. If 2, a military base.
-  - Note: The houses are all blueprints because they are planned to have features like "Health" so that they can collapse after taking too much damage. Since blueprints can be easily replicated, the houses can be spawned here, whereas the HISMs, as used by the forests and military base props (such as sandbags or pillboxes) cannot, and have their own blueprint for spawning. So, instead, the location of the mission objective is stored as a "Forest Objective Location" or a "Base Objective Location" to be used later. 
+- Now the level has between four and eight mission objectives for the players to complete. But because the level is currently a barren landscape, we want to make the surroundings a little more interesting. So, using a "Switch on Int" and a random number, each objective has a chance to spawn one of three things around itself: If 0, a Town. If 1, a forest. If 2, a military base.
+  - Note: The houses are all blueprints because they are planned to have features like "Health" so that they can collapse after taking too much damage. Since blueprints can be easily replicated, the houses can be spawned here, whereas the HISMs, as used by the forests and military base props (such as sandbags or pillboxes), cannot and have their own blueprint for spawning. So, instead, the location of the mission objective is stored as a "Forest Objective Location" or a "Base Objective Location" to be used later. 
 - <img width="908" height="407" alt="image" src="https://github.com/user-attachments/assets/4c2eb653-0edb-4b10-9028-bfaebee3db55" />
 - If a town is to be generated around an objective, the first thing to do is define how big that town is going to be. Then, with a rough estimate of the area around a house (+added room for spacing), we can figure out roughly how many houses can be supported in that town. 
 - <img width="911" height="304" alt="image" src="https://github.com/user-attachments/assets/3fafc48b-3625-4518-b3fc-ee09de2f46c4" />
@@ -239,13 +237,13 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="818" height="344" alt="image" src="https://github.com/user-attachments/assets/e43075b7-a919-460d-8f09-2f996b69e8a8" />
 - Now that the house has been successfully spawned, we need to store its location in the array so that its location can be tested later as new houses spawn.
 - <img width="293" height="227" alt="image" src="https://github.com/user-attachments/assets/60fe8e42-3c88-4bfb-a60b-2f40a6fd8370" />
-- Going back to the "determineNumObjectives" function, now that the objectives and towns (if any) have finished spawning, we can call the "startSpawningHouses" Custom Event, which itself just calls the "determineNumHousesToSpawn" function. This is used to spawn *individual* houses around the level, houses that are not associated with a town, and are just serving as props that the players can happen upon.
+- Going back to the "determineNumObjectives" function, now that the objectives and towns (if any) have finished spawning, we can call the "startSpawningHouses" Custom Event, which itself just calls the "determineNumHousesToSpawn" function. This is used to spawn *individual* houses around the level, houses that are not associated with a town and are just serving as props that the players can happen upon.
 - <img width="586" height="307" alt="image" src="https://github.com/user-attachments/assets/c9a6f1ef-8a9b-49c2-b32d-b5aec4def4dc" />
 - Using the seed-based RNGMaster, we determine the number of individual houses that will be spawned somewhere in the level. Using that number, we run a loop that calls the "spawnIndividualHouses" function, which is responsible for actually spawning the blueprints.
 - <img width="923" height="344" alt="image" src="https://github.com/user-attachments/assets/f3fb6637-4238-4304-aa77-0a561e89dc66" />
 - "spawnIndividualHouses" first gets the (currently hard-defined) boundaries of the level and generates a random coordinate. 
 - <img width="929" height="405" alt="image" src="https://github.com/user-attachments/assets/e9289914-6bd5-4f72-aea9-577d2344bbd9" />
-- Then we conduct a line trace to determine the elevation of the landscape, and set the spawn location.
+- Then we conduct a line trace to determine the elevation of the landscape and set the spawn location.
 - <img width="581" height="251" alt="image" src="https://github.com/user-attachments/assets/3e925720-da1e-42da-b944-de65a65a27ef" />
 - Using the "Impact Normal" of the Hit Result, we test to see if the slope of the landscape at the coordinate is less than or equal to twenty degrees. If the slope is too extreme, the function will call itself to run again and find a new location. This section could be improved by adding a safety net for "max retries," just so the function does not infinitely call itself. 
 - <img width="545" height="160" alt="image" src="https://github.com/user-attachments/assets/b924388e-befa-4d2b-8c34-73d502485b13" />
@@ -256,7 +254,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="882" height="344" alt="image" src="https://github.com/user-attachments/assets/b923cee5-7f3e-488b-9ecc-15a0b3c61438" />
 - When all the individual houses finish spawning, we can define the number of house blueprints that exist in the level. When a client joins a session, they have to wait until they receive all the data from the houses before their local world generation can begin. Without this system, the client will initiate spawners for meshes like trees, without their session knowing where the blueprints are placed. As a consequence, clients risk spawning things like trees or rocks in places where the host did not, since the client-side spawners, without knowing the locations of existing blueprints (since the client is still joining and receiving data), would pass checks that otherwise did not pass for the host. I hope that makes sense.
 - <img width="743" height="221" alt="image" src="https://github.com/user-attachments/assets/0ae8d7ca-4304-45ef-98a5-36ebc500a0d2" />
-- Now that all the important blueprints have been placed into the level, we can start spawning the HISMs, such as trees, rocks, and bushes. For this example, we will examine the logic that the host needs to run for themselves, since the joining clients will use logic that is slightly different. 
+- Now that all the important blueprints have been placed into the level, we can start spawning the HISMs, such as trees, rocks, and bushes. For this example, we will examine the logic that the host needs to run for themself, since the joining clients will use logic that is slightly different. 
 - <img width="331" height="367" alt="image" src="https://github.com/user-attachments/assets/7e923001-d695-4310-b6b2-182f35abc3e4" />
 - (The attached screenshot skips some logic. That logic just retrieves the generated seed and makes a cast to the game state). Going back to when we stored the objective locations, this is where those locations are used, starting with the "Mission Objective HISM Spawner" blueprint. It is spawned into the world and is fed the seed and the locations of the mission objectives. 
 - <img width="433" height="346" alt="image" src="https://github.com/user-attachments/assets/7782a5ae-7f5f-4812-889b-ddb1db139bf3" />
@@ -289,7 +287,7 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 - <img width="665" height="305" alt="image" src="https://github.com/user-attachments/assets/27623c01-8f35-4a4c-b00d-0deaa3b2d841" />
 - This step generates candidate spawn positions by performing multiple bounded random samples inside a single grid cell. This allows natural-looking variation within each cell.
 - <img width="928" height="380" alt="image" src="https://github.com/user-attachments/assets/783da2ea-6f79-4338-add1-31da9fb5a5f1" />
-- Finally, we end in some more familiar territory, and simply conduct a line trace at a given location and determine if the location is valid. If so, then a random HISM is spawned. The end result is clusters of 2D-noise-generated forests.
+- Finally, we end in some more familiar territory and simply conduct a line trace at a given location and determine if the location is valid. If so, then a random HISM is spawned. The end result is clusters of 2D-noise-generated forests.
  - <img width="689" height="342" alt="image" src="https://github.com/user-attachments/assets/10a0b705-5e4d-4df3-9e3d-ef03e9714dfd" />
  - The final blueprint used in world generation is for spawning trees and bushes at random locations, instead of defined clusters. This works the same as the spawner for individual houses (houses outside of towns), so I will not share it for the sake of conciseness. The only difference is that it runs a loop for a few thousand tries (to fully populate the level with foliage), instead of a few dozen.
  - There is not yet dynamic generation for the landscape itself, but I intend to add this feature at a much later date. 
@@ -303,20 +301,20 @@ The primary focus is on gameplay logic and system architecture, such as weapons,
 **Video Demo:** (Need demonstration video)
 
 ### Design Rationale
-- In a multiplayer environment, players frequently diverge in spacing and intent. Some players cluster into a primary engagement zone, while others operate more independently as "lone wolves." A naive spawner that targets only the largest cluster of players risks leaving isolated players unchallenged, enabling objective completion with minimal resistance. To counter, the spawner will collect the current information of all AI squad officers and all players. Using the collected data, the spawner can determine which player is the *most* isolated from enemy AI and will use that player as the spawn-anchor. The next batch of AI will spawn (while abiding by the spawn rules) near that isolated player.
+- In a multiplayer environment, players frequently diverge in spacing and intent. Some players cluster into a primary engagement zone, while others operate more independently as "lone wolves." A naive spawner that targets only the largest cluster of players risks leaving isolated players unchallenged, enabling objective completion with minimal resistance. To counter this, the spawner will collect the current information of all AI squad officers and all players. Using the collected data, the spawner can determine which player is the *most* isolated from enemy AI and will use that player as the spawn-anchor. The next batch of AI will spawn (while abiding by the spawn rules) near that isolated player.
 
 ### Done
 - Spawned by the server on game start.
 - Knows the number of connected players.
-- Ticks every 1.0 second to determine the AI cap (based on player-count), the existing AI, and however many AI are needed to reach the cap.
+- Ticks every 1.0 second to determine the AI cap (based on player count), the existing AI, and how many AI are needed to reach the cap.
 - Isolation analysis. When finding a spawn location for the AI, figure out which player is the most isolated (furthest from the nearest AI squad). Use that isolated player as the anchor to spawn the next batch of AI.
 - Prevent AI from spawning too far away (far enough away to be irrelevant) and prevent AI from spawning too near (prevent AI from spawning randomly atop a player's current location).
 - Tracks the number of alive AI, officers, or common soldiers, and knows when to spawn another squad of 10 without exceeding the cap. (Now considers the number of common soldiers, instead of my temporary build, which spawned a new squad for every officer's death).
 - Spawns 1 Officer and 9 Foot Soldiers in a selected area.
 
 ### Planned
-- Considering: The more mission objectives completed, the greater the squad spawn-cap?
-- Considering: Naturally increase the spawn-cap with time?
+- Considering: The more mission objectives completed, the greater the squad spawn cap?
+- Considering: Naturally increase the spawn cap over time?
 - Squad Assigning: When a squad is spawned, assign the summoned foot soldiers to their officer.
 
 ### Known Bugs
